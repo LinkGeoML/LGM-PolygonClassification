@@ -20,7 +20,7 @@ LGM-PolygonClassification is a python library that implements a full Machine Lea
 In order for the library to function the user must provide it with a .csv file containing a collection of matched polygon pairs. The first column must contain the polygon shapely geometries (in string form) that belong to the first polygon class, while the second column must contain their matched counterparts that belong to the second polygon class. The process of polygon matching is also supported by the library, provided that a pair of shapefiles containing polygon information (one for each polygon class) is available.
 
 **Polygon matching**: the process of matching polygons can be executing by calling the match_polygons.py script as follows:
-```python match_polygons.py -dian_shapefile_name <shapefile that corresponds to the first class polygons> -pst_shapefile_name <shapefile that corresponds to the second class polygons>
+```python match_polygons.py -dian_shapefile_name <shapefile that corresponds to the first class polygons> -pst_shapefile_name <shapefile that corresponds to the second class polygons>```.
 
 **Algorithm evaluation/selection**: consists of an exhaustive comparison between several classification algorithms that are available in the scikit-learn library. Its purpose is to
 compare the performance of every algorithm-hyperparameter configuration in a nested cross-validation scheme and produce the best candidate-algorithm for further usage. More specifically this step outputs three files:
