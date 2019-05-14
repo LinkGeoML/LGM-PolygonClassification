@@ -135,14 +135,14 @@ def tuned_parameters_5_fold(args):
 			if sentinel == 0:
 				X = np.asarray(feature_dict[key])
 				print("Pre Normalization - Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(X), np.std(X), np.amax(X), np.amin(X), X.shape))
-				if key in config.initialConfig.features_to_normalize:
+				if key in config.initialConfig.included_features:
 					X, scaler_dict[key] = standardize_data_train(X)
 				print("Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(X), np.std(X), np.amax(X), np.amin(X), X.shape))
 				sentinel = 1
 			else:
 				temp_array = np.asarray(feature_dict[key])
 				print("Pre Normalization - Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
-				if key in config.initialConfig.features_to_normalize:
+				if key in config.initialConfig.included_features:
 					temp_array, scaler_dict[key] = standardize_data_train(temp_array)
 				print("Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
 				X = np.concatenate((X, temp_array), axis = 1)
