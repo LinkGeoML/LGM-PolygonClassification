@@ -118,6 +118,50 @@ def tuned_parameters_5_fold(args):
 	#np.savetxt("X", X, delimiter=",")
 	#np.savetxt("y", y, delimiter=",")
 	
+	print(X.shape)
+	
+	feature_dict = {}
+	feature_dict['area'] = X[:, 0:1]
+	feature_dict['insersection_area'] = X[:, 1:2]
+	feature_dict['perimeter'] = X[:, 2:3]
+	feature_dict['vertex_count'] = X[:, 3:4]
+	feature_dict['mean_edge_length'] = X[:, 4:5]
+	feature_dict['variance_edge_length'] = X[:, 5:6]
+	
+	scaler_dict = dict((el, None) for el in config.initialConfig.included_features)
+	sentinel = 0
+	for key in feature_dict:
+		if feature_dict[key] is not None:
+			if sentinel == 0:
+				X = np.asarray(feature_dict[key])
+				print("Pre Normalization - Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(X), np.std(X), np.amax(X), np.amin(X), X.shape))
+				if key in config.initialConfig.features_to_normalize:
+					X, scaler_dict[key] = standardize_data_train(X)
+				print("Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(X), np.std(X), np.amax(X), np.amin(X), X.shape))
+				sentinel = 1
+			else:
+				temp_array = np.asarray(feature_dict[key])
+				print("Pre Normalization - Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
+				if key in config.initialConfig.features_to_normalize:
+					temp_array, scaler_dict[key] = standardize_data_train(temp_array)
+				print("Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
+				X = np.concatenate((X, temp_array), axis = 1)
+	
+	#return
+	"""
+	X = []
+	sentinel = 0
+	for key in features:
+		temp_array = features[key]
+		print("Pre Normalization - Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
+		temp_array, _ = standardize_data_train(temp_array)
+		#filepath = config.initialConfig.root_path + key + '.csv'
+		#np.savetxt(filepath, total_features, delimiter=",")
+		print("Feature Name: {0}, Mean Value: {1}, Std Value: {2}, Max Value: {3}, Min Value: {4}, Shape: {5}".format(key, np.mean(temp_array), np.std(temp_array), np.amax(temp_array), np.amin(temp_array), temp_array.shape))
+	"""
+		
+	#return
+	
 	#X = np.loadtxt('X.csv', delimiter=",")
 	#y = np.loadtxt('y.csv', delimiter=",")
 	print(X.shape, y.shape)
