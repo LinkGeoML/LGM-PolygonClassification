@@ -37,6 +37,20 @@ np.random.seed(1234)
 		
 def tuned_parameters_5_fold(args):
 	
+	"""
+	This function trains a classifier on a training set and
+	exports the model for later use.
+	
+	Arguments
+	---------
+	args: :obj:`dictionary`
+		several arguments that are needed for functionality purposes 
+	
+	Returns
+	-------
+	None
+	"""
+	
 	from sklearn.externals import joblib
 	
 	X_train, y_train = get_X_Y_data(args['polygon_file_name'])
@@ -86,6 +100,27 @@ def tuned_parameters_5_fold(args):
 		joblib.dump(clf, filepath, compress = 9)
 
 def train_clf_given_hyperparams(X_train, y_train, args):
+	
+	"""
+	This function is responsible for fitting a classifier
+	to a training set and returning the classifier object
+	for later use.
+	
+	Arguments
+	---------
+	X_train: :obj:`numpy array`
+		array containing the features of the train set
+	y_train: :obj:`numpy array`
+		array containing the labels of the train set
+	args: :obj:`dictionary`
+		several arguments that are needed for functionality purposes 
+	
+	Returns
+	-------
+	clf: :obj:`scikit-learn classifier object`
+		the trained classifier object
+	"""
+	
 	tuned_parameters = args['best_hyperparams']
 	for parameter in tuned_parameters:
 		#print(parameter)

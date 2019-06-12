@@ -37,6 +37,29 @@ np.random.seed(1234)
 
 def get_scores(X_test, y_test, clf):
 	
+	"""
+	This function is responsible for measuring the prediction scores
+	during the test phase
+	
+	Arguments
+	---------
+	X_test: :obj:`numpy array`
+		the test set features
+	y_test: :obj:`numpy array`
+		the test set class labels
+	clf: :obj:`scikit-learn classifier object`
+		the classifier object that is used for the predictions
+	
+	Returns
+	-------
+	accuracy_score(y_test, y_pred): :obj:`float`
+		the accuracy score as computed by scikit-learn
+	f1_score(y_test, y_pred, average='weighted'): :obj:`float`
+		the weighted f1-score as computed by scikit-learn
+	f1_score(y_test, y_pred, average='macro'): :obj:`float`
+		the macro f1-score as computed by scikit-learn
+	"""
+	
 	y_pred = clf.predict(X_test)	
 	
 	#print(X_test.shape)
@@ -46,6 +69,30 @@ def get_scores(X_test, y_test, clf):
 
 
 def fine_tune_parameters_given_clf(clf_name, X_train, y_train, X_test, y_test):
+	
+	"""
+	This function is responsible for fitting a classifier
+	to a training set and returning the classifier object
+	for later use.
+	
+	Arguments
+	---------
+	clf_name: :obj:`str`
+		name of the classifier
+	X_train: :obj:`numpy array`
+		array containing the features of the train set
+	y_train: :obj:`numpy array`
+		array containing the labels of the train set
+	X_test: :obj:`numpy array`
+		array containing the features of the test set
+	y_test: :obj:`numpy array`
+		array containing the labels of the test set
+	
+	Returns
+	-------
+	clf: :obj:`scikit-learn classifier object`
+		the trained classifier object
+	"""
 	
 	#scores = ['precision', 'recall']
 	scores = ['accuracy']#, 'f1_macro', 'f1_micro']
@@ -111,6 +158,21 @@ def fine_tune_parameters_given_clf(clf_name, X_train, y_train, X_test, y_test):
 	return clf
 		
 def tuned_parameters_5_fold(args):
+	
+	"""
+	This function trains a collection of classifiers using
+	a nested k-fold cross-validation approach and outputs
+	the relevant results so that later comparisons can be made
+	
+	Arguments
+	---------
+	args: :obj:`dictionary`
+		several arguments that are needed for functionality purposes 
+	
+	Returns
+	-------
+	None
+	"""
 	
 	# Get X, Y data
 	print(args['polygon_file_name'])
