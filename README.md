@@ -4,6 +4,9 @@ A python library for accurate classification of polygon types.
 ## About LGM-PolygonClassification
 LGM-PolygonClassification is a python library that implements a full Machine Learning workflow for training classification algorithms on annotated datasets that contain pairs of matched polygons each one of which belongs to a distinct polygon variant. LGM-PolygonClassification implements a series of training features by taking into consideration the individual characteristics of each polygon as well as including information about the geospatial relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality, based on the [scikit](https://scikit-learn.org/) toolkit, assessing as series of classification models and parameterizations, in order to find the most fitting model for the data at hand.
 
+## Documentation
+Source code documentation is available from [linkgeoml.github.io](https://linkgeoml.github.io/LGM-PolygonClassification/)
+
 ## Dependencies
 * python 3
 * numpy
