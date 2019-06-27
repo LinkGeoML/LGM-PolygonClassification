@@ -66,3 +66,7 @@ correspondingly.
 The output .csv file will contain the k most probable predictions regarding the category of each POI. If no arguments for output_csv are given, their values are defaulted to:
 * output_csv = predictions_*timestamp*.csv and 
 * trained_model_file_name = *name of the latest produced pickle file in the working directory*.
+
+## License
+
+LGM-PolygonClassification is available under the MIT License.
