@@ -53,7 +53,7 @@ class MLConf:
     n_jobs = -1  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
-    hyperparams_search_method = 'randomized'
+    hyperparams_search_method = 'grid'
     """str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).
     
     See Also
@@ -62,13 +62,13 @@ class MLConf:
     Details on available inputs.       
     """
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_search_method` equals to 'randomized'.
-    max_iter = 25
+    max_iter = 250
 
     classifiers = [
         # 'SVM',
-        'DecisionTree',
+        # 'DecisionTree',
         'RandomForest',
-        'ExtraTrees',
+        # 'ExtraTrees',
         # 'XGBoost',
         # 'MLP'
     ]
