@@ -34,7 +34,7 @@ def main(args):
     if os.path.isfile(getRelativePathtoWorking(config.dataset)) and os.path.isfile(getRelativePathtoWorking(config.dian)):
         seval = StrategyEvaluator()
         if args['--customparams']:
-            seval.interlinking()
+            seval.exec_classifiers()
         else:
             seval.hyperparamTuning()
     else:

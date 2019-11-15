@@ -21,33 +21,6 @@ class Features:
     --------
     :func:`compute_features`: Details on the metrics each classification group implements.
     """
-    max_freq_terms = 200
-
-    fields = [
-        "s1",
-        "s2",
-        "status",
-        "gid1",
-        "gid2",
-        "alphabet1",
-        "alphabet2",
-        "alpha2_cc1",
-        "alpha2_cc2",
-    ]
-
-    dtypes = {
-        's1': str, 's2': str,
-        'status': str,
-        'gid1': np.int32, 'gid2': np.int32,
-        'alphabet1': str, 'alphabet2': str,
-        'alpha2_cc1': str, 'alpha2_cc2': str
-    }
-
-    d = {
-        'TRUE': True,
-        'FALSE': False
-    }
-
     def __init__(self):
         pass
 

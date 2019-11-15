@@ -68,7 +68,7 @@ class StrategyEvaluator:
 
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
-    def interlinking(self):
+    def exec_classifiers(self):
         f = Features()
         pt = param_tuning.ParamTuning()
 
