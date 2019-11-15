@@ -82,13 +82,13 @@ class MLConf:
             'random_state': seed_no
         },
         'DecisionTree': {
-            'max_depth': 56, 'max_features': 5, 'min_samples_leaf': 0.18333333333333335,
-            'min_samples_split': 0.8714285714285714,
+            'min_samples_leaf': 0.10218472045491575, 'min_samples_split': 0.46848801022523695, 'max_features': 10,
+            'class_weight': {1: 1, 4: 9}, 'max_depth': 70,
             'random_state': seed_no,
         },
         'RandomForest': {
-            'bootstrap': True, 'class_weight': {1: 1, 4: 10}, 'criterion': 'gini', 'max_depth': 10,
-            'max_features': 'sqrt', 'min_samples_leaf': 8, 'min_samples_split': 5, 'n_estimators': 250,
+            'bootstrap': False, 'max_features': 'sqrt', 'criterion': 'entropy', 'class_weight': {1: 1, 4: 3},
+            'min_samples_split': 4, 'min_samples_leaf': 3, 'max_depth': 58, 'n_estimators': 284,
             'random_state': seed_no, 'n_jobs': n_jobs,  # 'oob_score': True,
         },
         'ExtraTrees': {
@@ -183,7 +183,7 @@ class MLConf:
         'class_weight': ['balanced', None] + [{1: 1, 4: w} for w in range(1, 10)],
         'degree': [1, 2, 3],
         'tol': [1e-3, 1e-4],
-        'max_iter': [1000]
+        'max_iter': [3000]
     }
     DecisionTree_hyperparameters_dist = {
         'max_depth': sp_randint(10, 100),
