@@ -226,7 +226,7 @@ class ParamTuning:
                 if self.search_method.lower() == 'grid':
                     clf = GridSearchCV(
                         self.clf_names[clf_key][0](), self.clf_names[clf_key][1],
-                        cv=self.outer_cv, scoring=self.score, n_jobs=self.n_jobs
+                        cv=self.outer_cv, scoring=self.score, verbose=1, n_jobs=self.n_jobs
                     )
                 # elif self.search_method.lower() == 'hyperband' and clf_key in ['XGBoost', 'Extra-Trees', 'Random Forest']:
                 #     HyperbandSearchCV(
