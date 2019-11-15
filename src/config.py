@@ -62,7 +62,7 @@ class MLConf:
     Details on available inputs.       
     """
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_search_method` equals to 'randomized'.
-    max_iter = 250
+    max_iter = 500
 
     classifiers = [
         # 'SVM',
@@ -102,7 +102,7 @@ class MLConf:
         'min_samples_leaf': [1, 2, 4, 10],
         # 'min_samples_split': list(np.linspace(0.1, 1, 10)),
         # 'min_samples_leaf': list(np.linspace(0.1, 0.5, 5)),
-        'max_features': [list(np.linspace(2, 20, 10))] + ['auto', None],
+        'max_features': list(np.linspace(0.1, 1.0, 10)) + ['auto', 'log2'],
         'splitter': ('best', 'random'),
         'class_weight': [None, 'balanced', {1: 1, 4: 2}, {1: 1, 4: 5}],
     }
