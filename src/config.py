@@ -77,32 +77,41 @@ class MLConf:
 
     clf_custom_params = {
         'SVM': {
-            'C': 145.30455255834553, 'class_weight': 'balanced', 'degree': 1, 'gamma': 0.3372999022968335,
-            'kernel': 'sigmoid', 'max_iter': 3000, 'tol': 0.001,
+            # scaler
+            'degree': 2, 'C': 199.0212721894755, 'gamma': 0.2456161956918959, 'max_iter': 3000, 'tol': 0.0001,
+            'class_weight': None, 'kernel': 'rbf',
             'random_state': seed_no
         },
         'DecisionTree': {
-            'min_samples_leaf': 0.10218472045491575, 'min_samples_split': 0.46848801022523695, 'max_features': 10,
-            'class_weight': {1: 1, 4: 9}, 'max_depth': 70,
+            # 'min_samples_leaf': 0.10218472045491575, 'min_samples_split': 0.46848801022523695, 'max_features': 10,
+            # 'class_weight': {1: 1, 4: 9}, 'max_depth': 70,
+            # scaler
+            'max_features': 10, 'min_samples_leaf': 0.13084191454406335, 'class_weight': {1: 1, 4: 2}, 'max_depth': 79,
+            'min_samples_split': 0.7040970996893269,
             'random_state': seed_no,
         },
         'RandomForest': {
-            'bootstrap': False, 'max_features': 'sqrt', 'criterion': 'entropy', 'class_weight': {1: 1, 4: 3},
-            'min_samples_split': 4, 'min_samples_leaf': 3, 'max_depth': 58, 'n_estimators': 284,
+            # 'bootstrap': False, 'max_features': 'sqrt', 'criterion': 'entropy', 'class_weight': {1: 1, 4: 3},
+            # 'min_samples_split': 4, 'min_samples_leaf': 3, 'max_depth': 58, 'n_estimators': 284,
+            # scaler
+            'max_depth': 62, 'criterion': 'entropy', 'bootstrap': False, 'min_samples_split': 5,
+            'class_weight': {1: 1, 4: 3}, 'n_estimators': 807, 'min_samples_leaf': 3, 'max_features': 'log2',
             'random_state': seed_no, 'n_jobs': n_jobs,  # 'oob_score': True,
         },
         'ExtraTrees': {
-            # basic
-            'n_estimators': 300, 'max_depth': 100,
-            # custom
-            'bootstrap': False, 'criterion': 'gini', 'max_depth': 11, 'max_features': 'sqrt', 'min_samples_leaf': 1,
-            'min_samples_split': 3, 'n_estimators': 844,
+            # scaler
+            'max_features': 'sqrt', 'bootstrap': False, 'n_estimators': 776, 'max_depth': 71,
+            'class_weight': {1: 1, 4: 1}, 'criterion': 'gini', 'min_samples_leaf': 1, 'min_samples_split': 7,
             'random_state': seed_no, 'n_jobs': n_jobs
         },
         'XGBoost': {
-            'n_estimators': 2549, 'min_child_weight': 1, 'subsample': 0.7250606565532803,
-            'colsample_bytree': 0.598605740971479, 'max_depth': 62, 'eta': 0.17994840726392214, 'gamma': 1,
-            'scale_pos_weight': 1,
+            # 'n_estimators': 2549, 'min_child_weight': 1, 'subsample': 0.7250606565532803,
+            # 'colsample_bytree': 0.598605740971479, 'max_depth': 62, 'eta': 0.17994840726392214, 'gamma': 1,
+            # 'scale_pos_weight': 1,
+            # scaler
+            'max_depth': 62, 'n_estimators': 2549, 'scale_pos_weight': 1, 'min_child_weight': 1,
+            'subsample': 0.7250606565532803, 'colsample_bytree': 0.598605740971479, 'gamma': 1,
+            'eta': 0.17994840726392214,
             'seed': seed_no, 'nthread': n_jobs
         },
     }
