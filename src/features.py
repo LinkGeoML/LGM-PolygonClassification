@@ -63,7 +63,7 @@ class Features:
             Binary labels {True, False} to train the classifiers.
         """
         fX = np.asarray(list(map(self.compute_features, X.geometry, X['dian_geom'])), dtype=float)
-        # fX = MinMaxScaler().fit_transform(fX)
+        fX = MinMaxScaler().fit_transform(fX)
         # fX = StandardScaler().fit_transform(fX)
         # fX = RobustScaler().fit_transform(fX)
 
