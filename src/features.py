@@ -4,8 +4,6 @@
 
 import numpy as np
 from src import config
-import os
-import glob
 from shapely.geometry import shape, LineString, Point
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
@@ -66,6 +64,8 @@ class Features:
         """
         fX = np.asarray(list(map(self.compute_features, X.geometry, X['dian_geom'])), dtype=float)
         # fX = MinMaxScaler().fit_transform(fX)
+        # fX = StandardScaler().fit_transform(fX)
+        # fX = RobustScaler().fit_transform(fX)
 
         if np.any(np.isnan(fX)): print(np.where(np.isnan(fX)))
         if not np.any(np.isfinite(fX)): print('infinite')
@@ -167,7 +167,8 @@ class Features:
         f = [
             area1, area2, cover1, cover2, l1, l2,
             no_coords1, no_coords2, avg1, avg2, var1, var2,
-            # convex_area1, convex_area2, centroid_dist,
         ]
+
+        if config.MLConf.extra_features: f += [convex_area1, convex_area2, convex_cover1, convex_cover2, centroid_dist]
 
         return f

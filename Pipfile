@@ -10,6 +10,7 @@ fiona = "*"
 geopandas = "*"
 scikit-learn = "*"
 xgboost = "*"
+docopt = "*"
 
 [requires]
 python_version = "3.7"
