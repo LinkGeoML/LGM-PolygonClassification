@@ -5,11 +5,14 @@ import numpy as np
 from scipy.stats import randint as sp_randint, expon, truncnorm
 
 
-#: Relative path to the train dataset. This value is used only when the *dtrain* cmd argument is None.
+#: str: Relative path to the datasets.
 dataset = 'data/polygonPairs_dataset.shp'
 dian = 'data/dian.shp'
 
+#: int: Seed used by each of the random number generators.
 seed_no = 42
+
+#: float: Proportion of the dataset to include in the test split. Accepted values should be between 0.0 and 1.0.
 test_split_thres = 0.2
 
 
@@ -47,11 +50,9 @@ class MLConf:
 
     kfold_parameter = 5  #: int: The number of outer folds that splits the dataset for the k-fold cross-validation.
 
-    #: int: The number of inner folds that splits the dataset for the k-fold cross-validation.
-    kfold_inner_parameter = 4
-
     n_jobs = -1  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
 
+    #: bool: Whether to build additional features or not, i.e., convex hull of polygons and dist of centroids.
     extra_features = False
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!

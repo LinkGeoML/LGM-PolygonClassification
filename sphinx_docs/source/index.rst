@@ -8,14 +8,25 @@ Welcome to LGM-PolygonClassification's documentation!
 
 .. include:: ../../README.rst
 
+How to use
+^^^^^^^^^^
+   
+.. automodule:: run
+   :members:
+
+API Reference
+^^^^^^^^^^^^^^
+
+View the auto-generated API documentation for information on a specific function, class, or method.
+   
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :name: mastertoc
 
-   export_best_model
-   find_best_clf
-   finetune_best_clf
-   polygon_feature_extraction
+   config
+   features
+   tuning
+   core
 
 Indices and tables
 ==================

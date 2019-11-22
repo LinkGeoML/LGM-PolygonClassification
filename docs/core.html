@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
+  <title>core &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
   
 
   
@@ -35,9 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <link rel="prev" title="tuning" href="tuning.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,11 +79,11 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="config.html">config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tuning.html">tuning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">core</a></li>
 </ul>
 
             
@@ -131,10 +129,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Python Module Index</li>
+      <li>core</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/core.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -147,38 +149,40 @@
 
            <div itemprop="articleBody">
             
+  <div class="section" id="core">
+<h1>core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><dl class="class">
+<dt id="src.core.StrategyEvaluator">
+<em class="property">class </em><code class="sig-prename descclassname">src.core.</code><code class="sig-name descname">StrategyEvaluator</code><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the pipeline for various strategies.</p>
+<dl class="method">
+<dt id="src.core.StrategyEvaluator.exec_classifiers">
+<code class="sig-name descname">exec_classifiers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.exec_classifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.exec_classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+toponym interlinking problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>str</em>) – Relative path to the train dataset.</p></li>
+<li><p><strong>test_data</strong> (<em>str</em>) – Relative path to the test dataset.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
-   <h1>Python Module Index</h1>
+<dl class="method">
+<dt id="src.core.StrategyEvaluator.hyperparamTuning">
+<code class="sig-name descname">hyperparamTuning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.hyperparamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.hyperparamTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+polygon classification problem.</p>
+</dd></dl>
 
-   <div class="modindex-jumpbox">
-   <a href="#cap-r"><strong>r</strong></a> | 
-   <a href="#cap-s"><strong>s</strong></a>
-   </div>
+</dd></dl>
 
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-r"><td></td><td>
-       <strong>r</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="index.html#module-run"><code class="xref">run</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-s"><td></td><td>
-       <strong>s</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">src</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="config.html#module-src.config"><code class="xref">src.config</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+</div></blockquote>
+<p><a class="reference internal" href="index.html#mastertoc"><span class="std std-ref">Return Home</span></a></p>
+</div>
 
 
            </div>
@@ -189,6 +193,13 @@
     </a>
 
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tuning.html" class="btn btn-neutral float-left" title="tuning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

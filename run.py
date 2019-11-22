@@ -3,7 +3,7 @@
 # E-mail: vkaffes@imis.athena-innovation.gr
 
 """A complete pipeline of processes for features extraction and training/evaluating state-of-the-art classifiers for
-toponym interlinking.
+polygon classification.
 
 Command line::
 
@@ -42,5 +42,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.0')
+    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.1')
     main(docopt_args)

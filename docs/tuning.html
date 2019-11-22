@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tuning &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="core" href="core.html" />
+    <link rel="prev" title="features" href="features.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LGM-PolygonClassification
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">core</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LGM-PolygonClassification</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>tuning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tuning.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tuning">
+<h1>tuning<a class="headerlink" href="#tuning" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><dl class="class">
+<dt id="src.param_tuning.ParamTuning">
+<em class="property">class </em><code class="sig-prename descclassname">src.param_tuning.</code><code class="sig-name descname">ParamTuning</code><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides all main methods for selecting, fine tuning hyperparameters, training and testing the best
+classifier for polygon classification. The following classifiers are examined:</p>
+<ul class="simple">
+<li><p>Support Vector Machine (SVM)</p></li>
+<li><p>Decision Trees</p></li>
+<li><p>Multi-Layer Perceptron (MLP)</p></li>
+<li><p>Random Forest</p></li>
+<li><p>Extra-Trees</p></li>
+<li><p>eXtreme Gradient Boosting (XGBoost)</p></li>
+</ul>
+<dl class="method">
+<dt id="src.param_tuning.ParamTuning.fineTuneClassifiers">
+<code class="sig-name descname">fineTuneClassifiers</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.fineTuneClassifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.fineTuneClassifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search over specified parameter values for various estimators/classifiers and choose the best one.</p>
+<p>This method searches over specified values and selects the classifier that
+achieves the best avg accuracy score for all evaluations. The supported search methods are:</p>
+<ul class="simple">
+<li><p><em>GridSearchCV</em>: Exhaustive search over specified parameter values for supported estimators.
+The following variables are defined in <a class="reference internal" href="config.html#src.config.MLConf" title="src.config.MLConf"><code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code></a> :</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">MLP_hyperparameters</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">RandomForests_hyperparameters</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">XGBoost_hyperparameters</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SVM_hyperparameters</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">DecisionTree_hyperparameters</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><em>RandomizedSearchCV</em>: Randomized search over continuous distribution space. <a class="reference internal" href="config.html#src.config.MLConf.max_iter" title="src.config.MLConf.max_iter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code></a>
+defines the number of parameter settings that are sampled. <a class="reference internal" href="config.html#src.config.MLConf.max_iter" title="src.config.MLConf.max_iter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code></a> trades off
+runtime vs quality of the solution. The following variables are defined in <a class="reference internal" href="config.html#src.config.MLConf" title="src.config.MLConf"><code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code></a> :</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">MLP_hyperparameters_dist</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">RandomForests_hyperparameters_dist</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">XGBoost_hyperparameters_dist</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SVM_hyperparameters_dist</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">DecisionTree_hyperparameters_dist</span></code></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em><em> or </em><em>sparse matrix</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>, </em><em>n_features</em><em>]</em>) – The training input samples.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>] or </em><em>[</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>]</em>) – The target values, i.e. class labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – It returns a dictionary with keys <em>accuracy</em>, i.e., the used similarity score, and <em>classifier</em>, i.e.,
+the name of the model in reference.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> of {<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>: <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>: <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.param_tuning.ParamTuning.testClassifier">
+<code class="sig-name descname">testClassifier</code><span class="sig-paren">(</span><em class="sig-param">X_test</em>, <em class="sig-param">y_test</em>, <em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.testClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.testClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a classifier on a testing set (X_test, y_test).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_test</strong> (<em>array-like</em><em> or </em><em>sparse matrix</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>, </em><em>n_features</em><em>]</em>) – The training input samples.</p></li>
+<li><p><strong>y_test</strong> (<em>array-like</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>] or </em><em>[</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>]</em>) – The target values, i.e. class labels.</p></li>
+<li><p><strong>model</strong> (<em>classifier object</em>) – A trained classifier.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the computed metrics, i.e., <em>accuracy</em>, <em>precision</em>, <em>recall</em> and <em>f1</em>, for the specified model on
+the test dataset.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple of (float, float, float, float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.param_tuning.ParamTuning.trainClassifier">
+<code class="sig-name descname">trainClassifier</code><span class="sig-paren">(</span><em class="sig-param">X_train</em>, <em class="sig-param">y_train</em>, <em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.trainClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.trainClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a classifier from the training set (X_train, y_train).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>array-like</em><em> or </em><em>sparse matrix</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>, </em><em>n_features</em><em>]</em>) – The training input samples.</p></li>
+<li><p><strong>y_train</strong> (<em>array-like</em><em>, </em><em>shape =</em><em> [</em><em>n_samples</em><em>] or </em><em>[</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>]</em>) – The target values, i.e. class labels.</p></li>
+<li><p><strong>model</strong> (<em>classifier object</em>) – An instance of a classifier.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>It returns a trained classifier.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>classifier object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div></blockquote>
+<p><a class="reference internal" href="index.html#mastertoc"><span class="std std-ref">Return Home</span></a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+	<a href="https://github.com/LinkGeoML/LGM-Interlinking">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="core.html" class="btn btn-neutral float-right" title="core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="features.html" class="btn btn-neutral float-left" title="features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, nikos
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

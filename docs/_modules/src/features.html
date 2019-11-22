@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>src.features &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LGM-PolygonClassification
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../config.html">config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning.html">tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../core.html">core</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">LGM-PolygonClassification</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>src.features</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.features</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Author: vkaff</span>
+<span class="c1"># E-mail: vkaffes@imis.athena-innovation.gr</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">src</span> <span class="k">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="k">import</span> <span class="n">shape</span><span class="p">,</span> <span class="n">LineString</span><span class="p">,</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">RobustScaler</span>
+
+
+<div class="viewcode-block" id="Features"><a class="viewcode-back" href="../../features.html#src.features.Features">[docs]</a><span class="k">class</span> <span class="nc">Features</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class loads the dataset, frequent terms and builds features that are used as input to supported classification</span>
+<span class="sd">    groups:</span>
+
+<span class="sd">    * *basic*: similarity features based on basic similarity measures.</span>
+<span class="sd">    * *basic_sorted*: similarity features based on sorted version of the basic similarity measures used in *basic* group.</span>
+<span class="sd">    * *lgm*: similarity features based on variations of LGM-Sim similarity measures.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :func:`compute_features`: Details on the metrics each classification group implements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Features.build"><a class="viewcode-back" href="../../features.html#src.features.Features.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build features depending on the assignment of parameter :py:attr:`~src.config.MLConf.classification_method`</span>
+<span class="sd">        and return values (fX, y) as ndarray of floats.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fX: ndarray</span>
+<span class="sd">            The computed features that will be used as input to ML classifiers.</span>
+<span class="sd">        y: ndarray</span>
+<span class="sd">            Binary labels {True, False} to train the classifiers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_features</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;dian_geom&#39;</span><span class="p">])),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">fX</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">fX</span><span class="p">)</span>
+        <span class="c1"># fX = StandardScaler().fit_transform(fX)</span>
+        <span class="c1"># fX = RobustScaler().fit_transform(fX)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">fX</span><span class="p">)):</span> <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">fX</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">fX</span><span class="p">)):</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;infinite&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fX</span></div>
+
+<div class="viewcode-block" id="Features.compute_features"><a class="viewcode-back" href="../../features.html#src.features.Features.compute_features">[docs]</a>    <span class="k">def</span> <span class="nf">compute_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poly1</span><span class="p">,</span> <span class="n">poly2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Depending on the group assigned to parameter :py:attr:`~src.config.MLConf.classification_method`,</span>
+<span class="sd">        this method builds an ndarray of the following groups of features:</span>
+
+<span class="sd">        * *basic*: various similarity measures, i.e.,</span>
+<span class="sd">          :func:`~src.sim_measures.damerau_levenshtein`,</span>
+<span class="sd">          :func:`~src.sim_measures.jaro`,</span>
+<span class="sd">          :func:`~src.sim_measures.jaro_winkler` and the reversed one,</span>
+<span class="sd">          :func:`~src.sim_measures.sorted_winkler`,</span>
+<span class="sd">          :func:`~src.sim_measures.cosine`,</span>
+<span class="sd">          :func:`~src.sim_measures.jaccard`,</span>
+<span class="sd">          :func:`~src.sim_measures.strike_a_match`,</span>
+<span class="sd">          :func:`~src.sim_measures.monge_elkan`,</span>
+<span class="sd">          :func:`~src.sim_measures.soft_jaccard`,</span>
+<span class="sd">          :func:`~src.sim_measures.davies`,</span>
+<span class="sd">          :func:`~src.sim_measures.lgm_jaro_winkler` and the reversed one,</span>
+<span class="sd">          :func:`~src.sim_measures.skipgrams`.</span>
+<span class="sd">        * *basic_sorted*: sorted versions of similarity measures utilized in *basic* group, except for the</span>
+<span class="sd">          :func:`~src.sim_measures.sorted_winkler`.</span>
+<span class="sd">        * *lgm*: LGM-Sim variations that integrate, as internal, the similarity measures utilized in *basic* group,</span>
+<span class="sd">          except for the :func:`~src.sim_measures.sorted_winkler`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s1, s2: str</span>
+<span class="sd">            Input toponyms.</span>
+<span class="sd">        sorted: bool, optional</span>
+<span class="sd">            Value of True indicate to build features for groups *basic* and *basic_sorted*, value of False only for *basic* group.</span>
+<span class="sd">        lgm_sims: bool, optional</span>
+<span class="sd">            Values of True or False indicate whether to build or not features for group *lgm*.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`list`</span>
+<span class="sd">            It returns a list (vector) of features.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">geom1</span> <span class="o">=</span> <span class="n">poly1</span>
+        <span class="n">geom2</span> <span class="o">=</span> <span class="n">shape</span><span class="p">(</span><span class="n">poly2</span><span class="p">)</span>
+
+        <span class="c1"># convex hull</span>
+        <span class="n">convex1</span> <span class="o">=</span> <span class="n">geom1</span><span class="o">.</span><span class="n">convex_hull</span>
+        <span class="n">convex2</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">convex_hull</span>
+
+        <span class="c1"># area</span>
+        <span class="n">area1</span> <span class="o">=</span> <span class="n">geom1</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">area2</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">convex_area1</span> <span class="o">=</span> <span class="n">convex1</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">convex_area2</span> <span class="o">=</span> <span class="n">convex2</span><span class="o">.</span><span class="n">area</span>
+
+        <span class="c1"># % coverage</span>
+        <span class="n">intersect</span> <span class="o">=</span> <span class="n">geom1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">geom2</span><span class="p">)</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">cover1</span> <span class="o">=</span> <span class="n">intersect</span> <span class="o">/</span> <span class="n">area1</span>
+        <span class="n">cover2</span> <span class="o">=</span> <span class="n">intersect</span> <span class="o">/</span> <span class="n">area2</span>
+        <span class="n">convex_intersect</span> <span class="o">=</span> <span class="n">convex1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">convex2</span><span class="p">)</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">convex_cover1</span> <span class="o">=</span> <span class="n">convex_intersect</span> <span class="o">/</span> <span class="n">convex_area1</span>
+        <span class="n">convex_cover2</span> <span class="o">=</span> <span class="n">convex_intersect</span> <span class="o">/</span> <span class="n">convex_area2</span>
+
+        <span class="c1"># polygon length</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="n">geom1</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">l2</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">length</span>
+
+        <span class="n">coords1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">geom1</span><span class="o">.</span><span class="n">exterior</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">xy</span><span class="p">))</span>
+        <span class="n">coords2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">geom2</span><span class="o">.</span><span class="n">exterior</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">xy</span><span class="p">))</span>
+
+        <span class="c1"># no of coords</span>
+        <span class="n">no_coords1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">no_coords2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># calculate the length of each side of the poly</span>
+        <span class="n">poly1_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">LineString</span><span class="p">((</span><span class="n">coords1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">coords1</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">length</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">poly2_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">LineString</span><span class="p">((</span><span class="n">coords2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">coords2</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">length</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="c1"># avg length per edge</span>
+        <span class="c1"># avg1 = l1 / no_coords1</span>
+        <span class="c1"># avg2 = l2 / no_coords2</span>
+        <span class="n">avg1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">poly1_lengths</span><span class="p">)</span>
+        <span class="n">avg2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">poly2_lengths</span><span class="p">)</span>
+
+        <span class="c1"># std on edge lengths</span>
+        <span class="c1"># std1 = np.std(poly1_lengths)</span>
+        <span class="c1"># std2 = np.std(poly2_lengths)</span>
+        <span class="n">var1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">poly1_lengths</span><span class="p">)</span>
+        <span class="n">var2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">poly2_lengths</span><span class="p">)</span>
+
+        <span class="c1"># centroid dist</span>
+        <span class="n">centroid1</span> <span class="o">=</span> <span class="n">geom1</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">coords</span>
+        <span class="n">centroid2</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">coords</span>
+        <span class="n">centroid_dist</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">centroid1</span><span class="p">)</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">centroid2</span><span class="p">))</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">area1</span><span class="p">,</span> <span class="n">area2</span><span class="p">,</span> <span class="n">cover1</span><span class="p">,</span> <span class="n">cover2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span>
+            <span class="n">no_coords1</span><span class="p">,</span> <span class="n">no_coords2</span><span class="p">,</span> <span class="n">avg1</span><span class="p">,</span> <span class="n">avg2</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">MLConf</span><span class="o">.</span><span class="n">extra_features</span><span class="p">:</span> <span class="n">f</span> <span class="o">+=</span> <span class="p">[</span><span class="n">convex_area1</span><span class="p">,</span> <span class="n">convex_area2</span><span class="p">,</span> <span class="n">convex_cover1</span><span class="p">,</span> <span class="n">convex_cover2</span><span class="p">,</span> <span class="n">centroid_dist</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">f</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+	<a href="https://github.com/LinkGeoML/LGM-Interlinking">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, nikos
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

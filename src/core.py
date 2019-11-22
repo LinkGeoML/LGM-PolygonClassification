@@ -20,12 +20,7 @@ class StrategyEvaluator:
 
     def hyperparamTuning(self):
         """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-        toponym interlinking problem.
-
-        :param train_data: Relative path to the train dataset.
-        :type train_data: str
-        :param test_data: Relative path to the test dataset.
-        :type test_data: str
+        polygon classification problem.
         """
         pt = param_tuning.ParamTuning()
         f = Features()
@@ -38,20 +33,14 @@ class StrategyEvaluator:
         print("Build features from train data in {} sec.".format(time.time() - start_time))
 
         start_time = time.time()
-        # 1st phase: find out best classifier from a list of candidate ones
-        # best_clf = pt.getBestClassifier(fX, ytrain)
-        # print("Best classifier is {} with score {}; {} sec.".format(
-        #     best_clf['classifier'], best_clf['accuracy'], time.time() - start_time))
-        #
-        # start_time = time.time()
-        # #  2nd phase: fine tune the best classifier in previous step
-        # estimator, params, score = pt.fineTuneClassifier(fX, ytrain, best_clf)
+        # 1st phase: find and fine tune the best classifier from a list of candidate ones
         best_clf, estimator = pt.fineTuneClassifiers(fX, ytrain)
+        estimator = best_clf['estimator']
         print("Best hyperparams, {}, with score {}; {} sec.".format(
             best_clf['hyperparams'], best_clf['score'], time.time() - start_time))
 
         start_time = time.time()
-        # 3nd phase: train the fine tuned best classifier on the whole train dataset (no folds)
+        # 2nd phase: train the fine tuned best classifier on the whole train dataset (no folds)
         estimator = pt.trainClassifier(fX, ytrain, estimator)
         print("Finished training model on dataset; {} sec.".format(time.time() - start_time))
 
@@ -60,7 +49,7 @@ class StrategyEvaluator:
         print("Build features from test data in {} sec".format(time.time() - start_time))
 
         start_time = time.time()
-        # 4th phase: test the fine tuned best classifier on the test dataset
+        # 3th phase: test the fine tuned best classifier on the test dataset
         acc, pre, rec, f1 = pt.testClassifier(fX, ytest, estimator)
         print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
         print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
@@ -69,6 +58,14 @@ class StrategyEvaluator:
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
     def exec_classifiers(self):
+        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+        toponym interlinking problem.
+
+        :param train_data: Relative path to the train dataset.
+        :type train_data: str
+        :param test_data: Relative path to the test dataset.
+        :type test_data: str
+        """
         f = Features()
         pt = param_tuning.ParamTuning()
 
