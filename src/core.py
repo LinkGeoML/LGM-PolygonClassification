@@ -58,13 +58,7 @@ class StrategyEvaluator:
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
     def exec_classifiers(self):
-        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-        toponym interlinking problem.
-
-        :param train_data: Relative path to the train dataset.
-        :type train_data: str
-        :param test_data: Relative path to the test dataset.
-        :type test_data: str
+        """Train and evaluate selected ML algorithms with custom hyper-parameters on dataset.
         """
         f = Features()
         pt = param_tuning.ParamTuning()

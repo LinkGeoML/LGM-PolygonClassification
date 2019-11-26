@@ -75,6 +75,7 @@ class MLConf:
         # 'XGBoost',
         # 'MLP'
     ]
+    #: list of str: Define/uncomment which classifiers will be examined on code execution.
 
     clf_custom_params = {
         'SVM': {

@@ -17,8 +17,8 @@ np.random.seed(config.seed_no)
 
 class ParamTuning:
     """
-    This class provides all main methods for selecting, fine tuning hyperparameters, training and testing the best
-    classifier for polygon classification. The following classifiers are examined:
+    This class provides the methods for fine tuning hyperparameters, training and testing various
+    classification models for polygon classification. The following classifiers are examined:
 
     * Support Vector Machine (SVM)
     * Decision Trees

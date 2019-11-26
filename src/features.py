@@ -9,33 +9,30 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
 
 class Features:
-    """
-    This class loads the dataset, frequent terms and builds features that are used as input to supported classification
-    groups:
-
-    * *basic*: similarity features based on basic similarity measures.
-    * *basic_sorted*: similarity features based on sorted version of the basic similarity measures used in *basic* group.
-    * *lgm*: similarity features based on variations of LGM-Sim similarity measures.
+    """This class builds features regarding polygon properties.
 
     See Also
     --------
-    :func:`compute_features`: Details on the metrics each classification group implements.
+    :func:`compute_features`: Details on the implemented features.
     """
+
     def __init__(self):
         pass
 
     def build(self, X):
-        """Build features depending on the assignment of parameter :py:attr:`~src.config.MLConf.classification_method`
-        and return values (fX, y) as ndarray of floats.
+        """Build features and return them as an ndarray of floats.
+
+        Parameters
+        ----------
+        X: array-like or sparse matrix, shape = [n_samples, n_features]
+            The train/test input samples.
 
         Returns
         -------
         fX: ndarray
-            The computed features that will be used as input to ML classifiers.
-        y: ndarray
-            Binary labels {True, False} to train the classifiers.
+            The computed features to use as input to ML classifiers.
         """
-        fX = np.asarray(list(map(self.compute_features, X.geometry, X['dian_geom'])), dtype=float)
+        fX = np.asarray(list(map(self.compute, X.geometry, X['dian_geom'])), dtype=float)
         fX = MinMaxScaler().fit_transform(fX)
         # fX = StandardScaler().fit_transform(fX)
         # fX = RobustScaler().fit_transform(fX)
@@ -45,37 +42,27 @@ class Features:
 
         return fX
 
-    def compute_features(self, poly1, poly2):
+    def compute(self, poly1, poly2):
         """
-        Depending on the group assigned to parameter :py:attr:`~src.config.MLConf.classification_method`,
-        this method builds an ndarray of the following groups of features:
+        This method builds an ndarray of the following features:
 
-        * *basic*: various similarity measures, i.e.,
-          :func:`~src.sim_measures.damerau_levenshtein`,
-          :func:`~src.sim_measures.jaro`,
-          :func:`~src.sim_measures.jaro_winkler` and the reversed one,
-          :func:`~src.sim_measures.sorted_winkler`,
-          :func:`~src.sim_measures.cosine`,
-          :func:`~src.sim_measures.jaccard`,
-          :func:`~src.sim_measures.strike_a_match`,
-          :func:`~src.sim_measures.monge_elkan`,
-          :func:`~src.sim_measures.soft_jaccard`,
-          :func:`~src.sim_measures.davies`,
-          :func:`~src.sim_measures.lgm_jaro_winkler` and the reversed one,
-          :func:`~src.sim_measures.skipgrams`.
-        * *basic_sorted*: sorted versions of similarity measures utilized in *basic* group, except for the
-          :func:`~src.sim_measures.sorted_winkler`.
-        * *lgm*: LGM-Sim variations that integrate, as internal, the similarity measures utilized in *basic* group,
-          except for the :func:`~src.sim_measures.sorted_winkler`.
+        * *core*: basic geometric attributes, i.e.,
+            #. area of each polygon,
+            #. percentage of coverage/intersection area per polygon,
+            #. perimeter of each polygon,
+            #. number of corners of each polygon,
+            #. average edges' length per corner of each polygon,
+            #. variance of edges' length per corner of each polygon,
+        * *extra*: these features are computed only when parameter :py:attr:`~src.config.MLConf.extra_features` is set
+           to True value. In such case, the following additional features are calculated:
+            #. area of of each polygon convex hull,
+            #. percentage of coverage/intersection of convex hull area per polygon,
+            #. distance of centroids of polygons
 
         Parameters
         ----------
-        s1, s2: str
-            Input toponyms.
-        sorted: bool, optional
-            Value of True indicate to build features for groups *basic* and *basic_sorted*, value of False only for *basic* group.
-        lgm_sims: bool, optional
-            Values of True or False indicate whether to build or not features for group *lgm*.
+        poly1, poly2: str
+            Input geometric objects, i.e., shapely Polygons.
 
         Returns
         -------

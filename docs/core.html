@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>core &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
+  <title>core &mdash; LGM-PolygonClassification 1.0.0 documentation</title>
   
 
   
@@ -157,25 +157,16 @@
 <em class="property">class </em><code class="sig-prename descclassname">src.core.</code><code class="sig-name descname">StrategyEvaluator</code><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the pipeline for various strategies.</p>
 <dl class="method">
-<dt id="src.core.StrategyEvaluator.exec_classifiers">
-<code class="sig-name descname">exec_classifiers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.exec_classifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.exec_classifiers" title="Permalink to this definition">¶</a></dt>
-<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-toponym interlinking problem.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>train_data</strong> (<em>str</em>) – Relative path to the train dataset.</p></li>
-<li><p><strong>test_data</strong> (<em>str</em>) – Relative path to the test dataset.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
 <dt id="src.core.StrategyEvaluator.hyperparamTuning">
 <code class="sig-name descname">hyperparamTuning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.hyperparamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.hyperparamTuning" title="Permalink to this definition">¶</a></dt>
 <dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
 polygon classification problem.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.core.StrategyEvaluator.exec_classifiers">
+<code class="sig-name descname">exec_classifiers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.exec_classifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.exec_classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train and evaluate selected ML algorithms with custom hyper-parameters on dataset.</p>
 </dd></dl>
 
 </dd></dl>
@@ -206,7 +197,7 @@ polygon classification problem.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, nikos
+        &copy; Copyright 2020, vkaff
 
     </p>
   </div>

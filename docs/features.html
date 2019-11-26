@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>features &mdash; LGM-PolygonClassification 0.0.1 documentation</title>
+  <title>features &mdash; LGM-PolygonClassification 1.0.0 documentation</title>
   
 
   
@@ -156,67 +156,64 @@
 <div><dl class="class">
 <dt id="src.features.Features">
 <em class="property">class </em><code class="sig-prename descclassname">src.features.</code><code class="sig-name descname">Features</code><a class="reference internal" href="_modules/src/features.html#Features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class loads the dataset, frequent terms and builds features that are used as input to supported classification
-groups:</p>
-<ul class="simple">
-<li><p><em>basic</em>: similarity features based on basic similarity measures.</p></li>
-<li><p><em>basic_sorted</em>: similarity features based on sorted version of the basic similarity measures used in <em>basic</em> group.</p></li>
-<li><p><em>lgm</em>: similarity features based on variations of LGM-Sim similarity measures.</p></li>
-</ul>
+<dd><p>This class builds features regarding polygon properties.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#src.features.Features.compute_features" title="src.features.Features.compute_features"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_features()</span></code></a></dt><dd><p>Details on the metrics each classification group implements.</p>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_features()</span></code></dt><dd><p>Details on the implemented features.</p>
 </dd>
 </dl>
 </div>
 <dl class="method">
 <dt id="src.features.Features.build">
 <code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/features.html#Features.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build features depending on the assignment of parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">classification_method</span></code>
-and return values (fX, y) as ndarray of floats.</p>
+<dd><p>Build features and return them as an ndarray of floats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>fX</strong> (<em>ndarray</em>) – The computed features that will be used as input to ML classifiers.</p></li>
-<li><p><strong>y</strong> (<em>ndarray</em>) – Binary labels {True, False} to train the classifiers.</p></li>
-</ul>
-</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like or sparse matrix, shape = [n_samples, n_features]</em>) – The train/test input samples.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>fX</strong> – The computed features to use as input to ML classifiers.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="src.features.Features.compute_features">
-<code class="sig-name descname">compute_features</code><span class="sig-paren">(</span><em class="sig-param">poly1</em>, <em class="sig-param">poly2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/features.html#Features.compute_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features.compute_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Depending on the group assigned to parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">classification_method</span></code>,
-this method builds an ndarray of the following groups of features:</p>
+<dt id="src.features.Features.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param">poly1</em>, <em class="sig-param">poly2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/features.html#Features.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method builds an ndarray of the following features:</p>
 <ul class="simple">
-<li><p><em>basic</em>: various similarity measures, i.e.,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">damerau_levenshtein()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">jaro()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">jaro_winkler()</span></code> and the reversed one,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">sorted_winkler()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">cosine()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">jaccard()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">strike_a_match()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">monge_elkan()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">soft_jaccard()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">davies()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">lgm_jaro_winkler()</span></code> and the reversed one,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">skipgrams()</span></code>.</p></li>
-<li><p><em>basic_sorted</em>: sorted versions of similarity measures utilized in <em>basic</em> group, except for the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">sorted_winkler()</span></code>.</p></li>
-<li><p><em>lgm</em>: LGM-Sim variations that integrate, as internal, the similarity measures utilized in <em>basic</em> group,
-except for the <code class="xref py py-func docutils literal notranslate"><span class="pre">sorted_winkler()</span></code>.</p></li>
+<li><dl class="simple">
+<dt><em>core</em>: basic geometric attributes, i.e.,</dt><dd><ol class="arabic simple">
+<li><p>area of each polygon,</p></li>
+<li><p>percentage of coverage/intersection area per polygon,</p></li>
+<li><p>perimeter of each polygon,</p></li>
+<li><p>number of corners of each polygon,</p></li>
+<li><p>average edges’ length per corner of each polygon,</p></li>
+<li><p>variance of edges’ length per corner of each polygon,</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><em>extra</em>: these features are computed only when parameter <a class="reference internal" href="config.html#src.config.MLConf.extra_features" title="src.config.MLConf.extra_features"><code class="xref py py-attr docutils literal notranslate"><span class="pre">extra_features</span></code></a> is set</dt><dd><dl class="simple">
+<dt>to True value. In such case, the following additional features are calculated:</dt><dd><ol class="arabic simple">
+<li><p>area of of each polygon convex hull,</p></li>
+<li><p>percentage of coverage/intersection of convex hull area per polygon,</p></li>
+<li><p>distance of centroids of polygons</p></li>
+</ol>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s2</strong> (<em>s1</em><em>,</em>) – Input toponyms.</p></li>
-<li><p><strong>sorted</strong> (<em>bool</em><em>, </em><em>optional</em>) – Value of True indicate to build features for groups <em>basic</em> and <em>basic_sorted</em>, value of False only for <em>basic</em> group.</p></li>
-<li><p><strong>lgm_sims</strong> (<em>bool</em><em>, </em><em>optional</em>) – Values of True or False indicate whether to build or not features for group <em>lgm</em>.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>poly1, poly2</strong> (<em>str</em>) – Input geometric objects, i.e., shapely Polygons.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>It returns a list (vector) of features.</p>
@@ -257,7 +254,7 @@ except for the <code class="xref py py-func docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, nikos
+        &copy; Copyright 2020, vkaff
 
     </p>
   </div>
