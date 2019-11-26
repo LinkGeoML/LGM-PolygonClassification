@@ -278,12 +278,23 @@ continuous parameters (whenever this is feasible):</p>
 <dt id="src.config.MLConf.score">
 <code class="sig-name descname">score</code><em class="property"> = 'accuracy'</em><a class="headerlink" href="#src.config.MLConf.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>The metric to optimize on hyper-parameter tuning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="src.config.MLConf.classifiers">
 <code class="sig-name descname">classifiers</code><em class="property"> = ['RandomForest']</em><a class="headerlink" href="#src.config.MLConf.classifiers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Define which classifiers will be examined on code execution. Accepted values are: SVM, DecisionTree, RandomForest, ExtraTrees, XGBoost, MLP.</p>
+<dd><p>Define the classifiers to apply on code execution. Accepted values are:
+* SVM
+* DecisionTree
+* RandomForest
+* ExtraTrees
+* XGBoost
+* MLP.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list of str</p>
