@@ -67,9 +67,9 @@ class MLConf:
     max_iter = 500
 
     score = 'accuracy'
-    """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `valid_metrics`_. 
+    """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_. 
     
-    .. _valid_metrics:
+    .. _Scikit predefined values:
         https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
     """
 
