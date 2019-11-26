@@ -61,12 +61,12 @@ class MLConf:
     
     See Also
     --------
-    :func:`~src.param_tuning.ParamTuning.getBestClassifier`, :func:`~src.param_tuning.ParamTuning.fineTuneClassifier` 
-    Details on available inputs.       
+    :func:`~src.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
     """
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_search_method` equals to 'randomized'.
     max_iter = 500
 
+    #: list of str: Define/uncomment which classifiers will be examined on code execution.
     classifiers = [
         # 'SVM',
         # 'DecisionTree',
@@ -75,7 +75,6 @@ class MLConf:
         # 'XGBoost',
         # 'MLP'
     ]
-    #: list of str: Define/uncomment which classifiers will be examined on code execution.
 
     clf_custom_params = {
         'SVM': {

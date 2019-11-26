@@ -254,8 +254,7 @@ continuous parameters (whenever this is feasible):</p>
 <dd><p>Search Method to use for finding best hyperparameters. (<em>randomized</em> | <em>grid</em>).</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">getBestClassifier()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">fineTuneClassifier()</span></code>
-Details on available inputs.</p>
+<p><a class="reference internal" href="tuning.html#src.param_tuning.ParamTuning.fineTuneClassifiers" title="src.param_tuning.ParamTuning.fineTuneClassifiers"><code class="xref py py-func docutils literal notranslate"><span class="pre">fineTuneClassifiers()</span></code></a>. Details on available inputs.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -271,6 +270,17 @@ Details on available inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.config.MLConf.classifiers">
+<code class="sig-name descname">classifiers</code><em class="property"> = ['RandomForest']</em><a class="headerlink" href="#src.config.MLConf.classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define/uncomment which classifiers will be examined on code execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 </dd></dl>
