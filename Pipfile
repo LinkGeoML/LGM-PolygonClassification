@@ -13,6 +13,7 @@ geopandas = "*"
 scikit-learn = "*"
 xgboost = "*"
 docopt = "*"
+tabulate = "*"
 
 [requires]
 python_version = "3.7"

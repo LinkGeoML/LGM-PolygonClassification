@@ -5,16 +5,21 @@
 import time
 from sklearn.model_selection import train_test_split
 import geopandas as gpd
+import numpy as np
+# We'll use this library to make the display pretty
+from tabulate import tabulate
 
 from src import param_tuning, config
 from src.features import Features
-from src.helpers import getRelativePathtoWorking
+from src.helpers import getRelativePathtoWorking, StaticValues
 
 
 class StrategyEvaluator:
     """
     This class implements the pipeline for various strategies.
     """
+    max_features_toshow = 10
+
     def __init__(self):
         pass
 
@@ -34,7 +39,7 @@ class StrategyEvaluator:
 
         start_time = time.time()
         # 1st phase: find and fine tune the best classifier from a list of candidate ones
-        best_clf, estimator = pt.fineTuneClassifiers(fX, ytrain)
+        best_clf = pt.fineTuneClassifiers(fX, ytrain)
         estimator = best_clf['estimator']
         print("Best hyperparams, {}, with score {}; {} sec.".format(
             best_clf['hyperparams'], best_clf['score'], time.time() - start_time))
@@ -50,10 +55,11 @@ class StrategyEvaluator:
 
         start_time = time.time()
         # 3th phase: test the fine tuned best classifier on the test dataset
-        acc, pre, rec, f1 = pt.testClassifier(fX, ytest, estimator)
-        print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
-        print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
-            best_clf['classifier'], acc, pre, rec, f1, time.time() - start_time))
+        acc, pre, rec, f1, importances = pt.testClassifier(fX, ytest, estimator)
+        self._print_stats({
+            'classifier': best_clf['classifier'], 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score': f1,
+            'feature_importances': importances, 'time': start_time
+        })
 
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
@@ -84,12 +90,35 @@ class StrategyEvaluator:
 
             start_time = time.time()
             # 2nd phase: test each classifier on the test dataset
-            acc, pre, rec, f1 = pt.testClassifier(fX_test, ytest, estimator)
-            print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
-            print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
-                clf, acc, pre, rec, f1, time.time() - start_time))
+            acc, pre, rec, f1, importances = pt.testClassifier(fX_test, ytest, estimator)
+            self._print_stats({
+                'classifier': clf, 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score':f1,
+                'feature_importances': importances, 'time': start_time
+            })
 
             print("The whole process took {} sec.\n".format(time.time() - tot_time))
+
+    def _print_stats(self, params):
+        print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
+        print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
+            params['classifier'], params['accuracy'], params['precision'], params['recall'], params['f1_score'],
+            time.time() - params['time']))
+
+        if params['feature_importances'] is not None:
+            importances = np.ma.masked_equal(params['feature_importances'], 0.0)
+            if importances.mask is np.ma.nomask: importances.mask = np.zeros(importances.shape, dtype=bool)
+
+            indices = np.argsort(importances.compressed())[::-1][
+                      :min(importances.compressed().shape[0], self.max_features_toshow)]
+            headers = ["name", "score"]
+
+            fcols = StaticValues.featureCols if config.MLConf.extra_features is False \
+                else StaticValues.featureCols + StaticValues.extra_featureCols
+            print(tabulate(zip(
+                np.asarray(fcols, object)[~importances.mask][indices], importances.compressed()[indices]
+            ), headers, tablefmt="simple"))
+
+        print()
 
     def _load_and_split_data(self):
         data_df = gpd.read_file(getRelativePathtoWorking(config.dataset))

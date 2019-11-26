@@ -102,7 +102,7 @@ class ParamTuning:
                 if self.search_method.lower() == 'grid':
                     clf = GridSearchCV(
                         self.clf_names[clf_key][0](), self.clf_names[clf_key][1],
-                        cv=self.outer_cv, scoring=self.score, verbose=1, n_jobs=self.n_jobs
+                        cv=self.outer_cv, scoring=config.MLConf.score, verbose=1, n_jobs=self.n_jobs
                     )
                 # elif self.search_method.lower() == 'hyperband' and clf_key in ['XGBoost', 'Extra-Trees', 'Random Forest']:
                 #     HyperbandSearchCV(
@@ -115,7 +115,7 @@ class ParamTuning:
                 else:  # randomized is used as default
                     clf = RandomizedSearchCV(
                         self.clf_names[clf_key][0](), self.clf_names[clf_key][2],
-                        cv=self.outer_cv, scoring=self.score, verbose=1, n_jobs=self.n_jobs, n_iter=self.n_iter
+                        cv=self.outer_cv, scoring=config.MLConf.score, verbose=1, n_jobs=self.n_jobs, n_iter=self.n_iter
                     )
                 clf.fit(X, y)
 
@@ -181,5 +181,10 @@ class ParamTuning:
         pre = precision_score(y_test, y_pred)
         rec = recall_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
+        fimportance = None
+        if hasattr(model, 'feature_importances_'):
+            fimportance = model.feature_importances_
+        # elif hasattr(model, 'coef_'):
+        #     fimportance = model.coef_
 
-        return acc, pre, rec, f1
+        return acc, pre, rec, f1, fimportance
