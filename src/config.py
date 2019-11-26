@@ -66,7 +66,14 @@ class MLConf:
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_search_method` equals to 'randomized'.
     max_iter = 500
 
-    #: list of str: Define/uncomment which classifiers will be examined on code execution.
+    score = 'accuracy'
+    """ The metric to optimize on hyper-parameter tuning.
+    
+    .. _Supported values:
+        https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
+    """
+
+    #: list of str: Define which classifiers will be examined on code execution. Accepted values are: SVM, DecisionTree, RandomForest, ExtraTrees, XGBoost, MLP.
     classifiers = [
         # 'SVM',
         # 'DecisionTree',

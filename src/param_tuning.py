@@ -45,8 +45,6 @@ class ParamTuning:
         'XGBoost': [XGBClassifier, config.MLConf.XGBoost_hyperparameters, config.MLConf.XGBoost_hyperparameters_dist]
     }
 
-    score = 'accuracy'
-
     def __init__(self):
         # To be used in CV
         self.outer_cv = StratifiedKFold(n_splits=config.MLConf.kfold_parameter, shuffle=False,
