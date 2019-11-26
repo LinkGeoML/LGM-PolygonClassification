@@ -67,9 +67,9 @@ class MLConf:
     max_iter = 500
 
     score = 'accuracy'
-    """str: The metric to optimize on hyper-parameter tuning.
+    """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `valid_metrics`. 
     
-    .. _Supported values:
+    .. _valid_metrics:
         https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
     """
 
@@ -81,8 +81,7 @@ class MLConf:
         # 'XGBoost',
         # 'MLP'
     ]
-    """
-    list of str: Define the classifiers to apply on code execution. Accepted values are: 
+    """list of str: Define the classifiers to apply on code execution. Accepted values are: 
         * SVM 
         * DecisionTree
         * RandomForest
