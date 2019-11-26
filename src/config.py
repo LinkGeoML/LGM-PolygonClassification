@@ -83,12 +83,12 @@ class MLConf:
     ]
     """
     list of str: Define the classifiers to apply on code execution. Accepted values are: 
-    * SVM 
-    * DecisionTree
-    * RandomForest
-    * ExtraTrees
-    * XGBoost
-    * MLP.
+        * SVM 
+        * DecisionTree
+        * RandomForest
+        * ExtraTrees
+        * XGBoost
+        * MLP.
     """
 
     clf_custom_params = {
