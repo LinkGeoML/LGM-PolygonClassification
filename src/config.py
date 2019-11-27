@@ -149,9 +149,11 @@ class MLConf:
         'MLP': {
             # with scaler
             # basic
-
+            # 'activation': 'logistic', 'solver': 'lbfgs', 'max_iter': 1000, 'tol': 0.0001,
+            # 'learning_rate_init': 0.16533315728128767,
             # extra
-            'max_iter': 300, 'solver': 'adam', 'learning_rate_init': 0.0025616481080688613,
+            'tol': 0.0001, 'learning_rate_init': 0.06794912926673598, 'max_iter': 1000, 'activation': 'logistic',
+            'solver': 'lbfgs',
             'random_state': seed_no,
         },
     }
