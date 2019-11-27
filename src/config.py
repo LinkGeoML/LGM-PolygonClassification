@@ -50,10 +50,10 @@ class MLConf:
 
     kfold_parameter = 5  #: int: The number of outer folds that splits the dataset for the k-fold cross-validation.
 
-    n_jobs = -1  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
+    n_jobs = 4  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
 
     #: bool: Whether to build additional features or not, i.e., convex hull of polygons and dist of centroids.
-    extra_features = False
+    extra_features = True
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
     hyperparams_search_method = 'randomized'
@@ -93,42 +93,66 @@ class MLConf:
 
     clf_custom_params = {
         'SVM': {
-            # scaler
-            'degree': 2, 'C': 199.0212721894755, 'gamma': 0.2456161956918959, 'max_iter': 3000, 'tol': 0.0001,
-            'class_weight': None, 'kernel': 'rbf',
+            # with scaler
+            # basic/extra
+            'gamma': 0.2456161956918959, 'max_iter': 3000, 'C': 199.0212721894755, 'kernel': 'rbf',
+            'class_weight': None, 'tol': 0.0001, 'degree': 2,
             'random_state': seed_no
         },
         'DecisionTree': {
             # 'min_samples_leaf': 0.10218472045491575, 'min_samples_split': 0.46848801022523695, 'max_features': 10,
             # 'class_weight': {1: 1, 4: 9}, 'max_depth': 70,
-            # scaler
-            'max_features': 10, 'min_samples_leaf': 0.13084191454406335, 'class_weight': {1: 1, 4: 2}, 'max_depth': 79,
-            'min_samples_split': 0.7040970996893269,
+            # with scaler
+            # 'max_features': 10, 'min_samples_leaf': 0.13084191454406335, 'class_weight': {1: 1, 4: 2}, 'max_depth': 79,
+            # 'min_samples_split': 0.7040970996893269,
+            # basic
+            # 'min_samples_leaf': 0.13896623393837215, 'class_weight': {1: 1, 4: 7}, 'max_depth': 42, 'max_features': 5,
+            # 'min_samples_split': 0.21705549723971926,
+            # extra
+            'max_features': 7, 'max_depth': 50, 'min_samples_split': 0.5138831080474099,
+            'min_samples_leaf': 0.12655804022659994, 'class_weight': {1: 1, 4: 4},
             'random_state': seed_no,
         },
         'RandomForest': {
-            # 'bootstrap': False, 'max_features': 'sqrt', 'criterion': 'entropy', 'class_weight': {1: 1, 4: 3},
-            # 'min_samples_split': 4, 'min_samples_leaf': 3, 'max_depth': 58, 'n_estimators': 284,
-            # scaler
-            'max_depth': 62, 'criterion': 'entropy', 'bootstrap': False, 'min_samples_split': 5,
-            'class_weight': {1: 1, 4: 3}, 'n_estimators': 807, 'min_samples_leaf': 3, 'max_features': 'log2',
+            # with scaler
+            # basic
+            # 'max_depth': 62, 'min_samples_split': 2, 'n_estimators': 553, 'max_features': 'sqrt', 'bootstrap': False,
+            # 'criterion': 'entropy', 'min_samples_leaf': 2, 'class_weight': {1: 1, 4: 7},
+            # extra
+            'max_depth': 77, 'min_samples_split': 8, 'min_samples_leaf': 2, 'bootstrap': False, 'criterion': 'entropy',
+            'n_estimators': 459, 'max_features': 'log2', 'class_weight': {1: 1, 4: 7},
+            # 'max_depth': 62, 'criterion': 'entropy', 'bootstrap': False, 'min_samples_split': 5,
+            # 'class_weight': {1: 1, 4: 3}, 'n_estimators': 807, 'min_samples_leaf': 3, 'max_features': 'log2',
             'random_state': seed_no, 'n_jobs': n_jobs,  # 'oob_score': True,
         },
         'ExtraTrees': {
-            # scaler
-            'max_features': 'sqrt', 'bootstrap': False, 'n_estimators': 776, 'max_depth': 71,
-            'class_weight': {1: 1, 4: 1}, 'criterion': 'gini', 'min_samples_leaf': 1, 'min_samples_split': 7,
+            # with scaler
+            # basic
+            # 'max_depth': 71, 'bootstrap': False, 'criterion': 'gini', 'class_weight': {1: 1, 4: 1},
+            # 'min_samples_leaf': 1, 'max_features': 'sqrt', 'min_samples_split': 7, 'n_estimators': 776,
+            # extra
+            'class_weight': {1: 1, 4: 4}, 'max_depth': 98, 'criterion': 'gini', 'bootstrap': False,
+            'min_samples_leaf': 1, 'max_features': 'sqrt', 'min_samples_split': 4, 'n_estimators': 887,
             'random_state': seed_no, 'n_jobs': n_jobs
         },
         'XGBoost': {
-            # 'n_estimators': 2549, 'min_child_weight': 1, 'subsample': 0.7250606565532803,
-            # 'colsample_bytree': 0.598605740971479, 'max_depth': 62, 'eta': 0.17994840726392214, 'gamma': 1,
-            # 'scale_pos_weight': 1,
-            # scaler
-            'max_depth': 62, 'n_estimators': 2549, 'scale_pos_weight': 1, 'min_child_weight': 1,
-            'subsample': 0.7250606565532803, 'colsample_bytree': 0.598605740971479, 'gamma': 1,
-            'eta': 0.17994840726392214,
+            # with scaler
+            # basic
+            # 'n_estimators': 2549, 'min_child_weight': 1, 'max_depth': 62, 'scale_pos_weight': 1,
+            # 'colsample_bytree': 0.598605740971479, 'gamma': 1, 'eta': 0.17994840726392214,
+            # 'subsample': 0.7250606565532803,
+            # extra
+            'n_estimators': 1638, 'colsample_bytree': 0.8721685761725149, 'min_child_weight': 2, 'gamma': 1,
+            'max_depth': 79, 'eta': 0.03649597209843184, 'subsample': 0.957596136356163, 'scale_pos_weight': 1,
             'seed': seed_no, 'nthread': n_jobs
+        },
+        'MLP': {
+            # with scaler
+            # basic
+
+            # extra
+            'max_iter': 300, 'solver': 'adam', 'learning_rate_init': 0.0025616481080688613,
+            'random_state': seed_no,
         },
     }
 
@@ -196,8 +220,10 @@ class MLConf:
     }
     MLP_hyperparameters = {
         'learning_rate_init': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1],
-        'max_iter': [300, 500, 1000],
-        'solver': ['sgd', 'adam']
+        'max_iter': [1000],
+        'solver': ['lbfgs', 'sgd', 'adam'],
+        'activation': ['identity', 'logistic', 'tanh', 'relu'],
+        'tol': [1e-3, 1e-4],
     }
 
     # These parameters constitute the search space for RandomizedSearchCV in our experiments.
@@ -240,6 +266,8 @@ class MLConf:
     }
     MLP_hyperparameters_dist = {
         'learning_rate_init': expon(loc=0.0001, scale=0.1),
-        'max_iter': [300, 500, 1000],
-        'solver': ['sgd', 'adam']
+        'max_iter': [1000],
+        'solver': ['lbfgs', 'sgd', 'adam'],
+        'activation': ['identity', 'logistic', 'tanh', 'relu'],
+        'tol': [1e-3, 1e-4],
     }
