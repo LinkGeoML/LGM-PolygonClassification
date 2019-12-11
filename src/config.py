@@ -6,8 +6,7 @@ from scipy.stats import randint as sp_randint, expon, truncnorm
 
 
 #: str: Relative path to the datasets.
-dataset = 'data/polygonPairs_dataset.shp'
-dian = 'data/dian.shp'
+dataset = 'data/polypairs_dataset.csv'
 
 #: int: Seed used by each of the random number generators.
 seed_no = 42
@@ -63,7 +62,9 @@ class MLConf:
     --------
     :func:`~src.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
     """
-    #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_search_method` equals to 'randomized'.
+
+    #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_
+    #: search_method` equals to 'randomized'.
     max_iter = 500
 
     score = 'accuracy'

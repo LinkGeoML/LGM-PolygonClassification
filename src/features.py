@@ -4,7 +4,8 @@
 
 import numpy as np
 from src import config
-from shapely.geometry import shape, LineString, Point
+from shapely.geometry import LineString, Point
+from shapely.wkt import loads
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
 
@@ -32,7 +33,7 @@ class Features:
         fX: ndarray
             The computed features to use as input to ML classifiers.
         """
-        fX = np.asarray(list(map(self.compute, X.geometry, X['dian_geom'])), dtype=float)
+        fX = np.asarray(list(map(self.compute, X['pst_geom'], X['dian_geom'])), dtype=float)
         fX = MinMaxScaler().fit_transform(fX)
         # fX = StandardScaler().fit_transform(fX)
         # fX = RobustScaler().fit_transform(fX)
@@ -71,8 +72,8 @@ class Features:
         """
         f = []
 
-        geom1 = poly1
-        geom2 = shape(poly2)
+        geom1 = loads(poly1)
+        geom2 = loads(poly2)
 
         # convex hull
         convex1 = geom1.convex_hull

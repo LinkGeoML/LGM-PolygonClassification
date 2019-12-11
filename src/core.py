@@ -4,8 +4,8 @@
 
 import time
 from sklearn.model_selection import train_test_split
-import geopandas as gpd
 import numpy as np
+import pandas as pd
 # We'll use this library to make the display pretty
 from tabulate import tabulate
 
@@ -92,7 +92,7 @@ class StrategyEvaluator:
             # 2nd phase: test each classifier on the test dataset
             acc, pre, rec, f1, importances = pt.testClassifier(fX_test, ytest, estimator)
             self._print_stats({
-                'classifier': clf, 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score':f1,
+                'classifier': clf, 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score': f1,
                 'feature_importances': importances, 'time': start_time
             })
 
@@ -121,13 +121,13 @@ class StrategyEvaluator:
         print()
 
     def _load_and_split_data(self):
-        data_df = gpd.read_file(getRelativePathtoWorking(config.dataset))
-        dian_df = gpd.read_file(getRelativePathtoWorking(config.dian))
-        dian_df.rename(columns={"geometry": "dian_geom"}, inplace=True)
-        data_df = data_df.merge(
-            dian_df[['id', 'unique_id', 'area_doc_1', 'worktype', 'dian_geom']],
-            left_on=['dian_id'], right_on=['id'], how='left'
-        )
+        data_df = pd.read_csv(getRelativePathtoWorking(config.dataset))
+        # dian_df = gpd.read_file(getRelativePathtoWorking(config.dian))
+        # dian_df.rename(columns={"geometry": "dian_geom"}, inplace=True)
+        # data_df = data_df.merge(
+        #     dian_df[['id', 'unique_id', 'area_doc_1', 'worktype', 'dian_geom']],
+        #     left_on=['dian_id'], right_on=['id'], how='left'
+        # )
 
         X = data_df.drop('status', axis=1)
         y = data_df['status']

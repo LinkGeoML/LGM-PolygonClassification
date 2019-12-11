@@ -15,7 +15,7 @@ Command line::
     Options:
         -h --help                   show this screen.
         --version                   show version.
-        --customparams              [default: False].
+        --customparams              run classifiers with custom hyper-parameters defined in config.py file [default: False].
 
 """
 
@@ -31,7 +31,7 @@ def main(args):
     # UTF8Writer = codecs.getwriter('utf8')
     # sys.stdout = UTF8Writer(sys.stdout)
 
-    if os.path.isfile(getRelativePathtoWorking(config.dataset)) and os.path.isfile(getRelativePathtoWorking(config.dian)):
+    if os.path.isfile(getRelativePathtoWorking(config.dataset)):
         seval = StrategyEvaluator()
         if args['--customparams']:
             seval.exec_classifiers()
@@ -42,5 +42,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.1')
+    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.2')
     main(docopt_args)
