@@ -2,7 +2,6 @@
 # E-mail: vkaffes@imis.athena-innovation.gr
 
 from src import config
-import numpy as np
 
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -11,8 +10,9 @@ from xgboost import XGBClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, StratifiedKFold
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+import numpy as np
 
-np.random.seed(config.seed_no)
+# np.random.seed(config.seed_no)
 
 
 class ParamTuning:
@@ -47,7 +47,7 @@ class ParamTuning:
 
     def __init__(self):
         # To be used in CV
-        self.outer_cv = StratifiedKFold(n_splits=config.MLConf.kfold_parameter, shuffle=False,
+        self.outer_cv = StratifiedKFold(n_splits=config.MLConf.kfold_parameter, shuffle=True,
                                         random_state=config.seed_no)
 
         self.kfold = config.MLConf.kfold_parameter
@@ -152,7 +152,7 @@ class ParamTuning:
         classifier object
             It returns a trained classifier.
         """
-        if hasattr(model, "n_jobs"): model.set_params(n_jobs=config.MLConf.n_jobs)
+        # if hasattr(model, "n_jobs"): model.set_params(n_jobs=config.MLConf.n_jobs)
 
         model.fit(X_train, y_train)
         return model
@@ -181,10 +181,12 @@ class ParamTuning:
         pre = precision_score(y_test, y_pred)
         rec = recall_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
+        res = np.equal(y_test.to_numpy(), y_pred)
+
         fimportance = None
         if hasattr(model, 'feature_importances_'):
             fimportance = model.feature_importances_
         # elif hasattr(model, 'coef_'):
         #     fimportance = model.coef_
 
-        return acc, pre, rec, f1, fimportance
+        return dict(metrics=dict(accuracy=acc, precision=pre, recall=rec, f1_score=f1, stats=res), feature_imp=fimportance)

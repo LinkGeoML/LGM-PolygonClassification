@@ -9,7 +9,7 @@ from scipy.stats import randint as sp_randint, expon, truncnorm
 dataset = 'data/polypairs_dataset.csv'
 
 #: int: Seed used by each of the random number generators.
-seed_no = 42
+seed_no = 2020
 
 #: float: Proportion of the dataset to include in the test split. Accepted values should be between 0.0 and 1.0.
 test_split_thres = 0.2
@@ -55,7 +55,7 @@ class MLConf:
     extra_features = True
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
-    hyperparams_search_method = 'randomized'
+    hyperparams_search_method = 'grid'
     """str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).
     
     See Also
@@ -96,9 +96,8 @@ class MLConf:
         'SVM': {
             # with scaler
             # basic/extra
-            'gamma': 0.2456161956918959, 'max_iter': 3000, 'C': 199.0212721894755, 'kernel': 'rbf',
-            'class_weight': None, 'tol': 0.0001, 'degree': 2,
-            'random_state': seed_no
+            'C': 200, 'class_weight': 'balanced', 'gamma': 10, 'max_iter': 10000,
+            # 'kernel': 'rbf', 'tol': 0.001
         },
         'DecisionTree': {
             # 'min_samples_leaf': 0.10218472045491575, 'min_samples_split': 0.46848801022523695, 'max_features': 10,
@@ -110,9 +109,9 @@ class MLConf:
             # 'min_samples_leaf': 0.13896623393837215, 'class_weight': {1: 1, 4: 7}, 'max_depth': 42, 'max_features': 5,
             # 'min_samples_split': 0.21705549723971926,
             # extra
-            'max_features': 7, 'max_depth': 50, 'min_samples_split': 0.5138831080474099,
-            'min_samples_leaf': 0.12655804022659994, 'class_weight': {1: 1, 4: 4},
-            'random_state': seed_no,
+            'class_weight': {1: 1, 4: 2}, 'max_depth': 80, 'max_features': 10, 'min_samples_leaf': 2,
+            'min_samples_split': 10,
+            # 'splitter': 'best',
         },
         'RandomForest': {
             # with scaler
@@ -120,11 +119,9 @@ class MLConf:
             # 'max_depth': 62, 'min_samples_split': 2, 'n_estimators': 553, 'max_features': 'sqrt', 'bootstrap': False,
             # 'criterion': 'entropy', 'min_samples_leaf': 2, 'class_weight': {1: 1, 4: 7},
             # extra
-            'max_depth': 77, 'min_samples_split': 8, 'min_samples_leaf': 2, 'bootstrap': False, 'criterion': 'entropy',
-            'n_estimators': 459, 'max_features': 'log2', 'class_weight': {1: 1, 4: 7},
-            # 'max_depth': 62, 'criterion': 'entropy', 'bootstrap': False, 'min_samples_split': 5,
-            # 'class_weight': {1: 1, 4: 3}, 'n_estimators': 807, 'min_samples_leaf': 3, 'max_features': 'log2',
-            'random_state': seed_no, 'n_jobs': n_jobs,  # 'oob_score': True,
+            'class_weight':  {1: 2, 4: 1}, 'criterion': 'entropy', 'max_depth': 100, 'n_estimators': 1000,
+            # 'min_samples_split': 2,
+            # 'random_state': seed_no, 'n_jobs': n_jobs,  # 'oob_score': True,
         },
         'ExtraTrees': {
             # with scaler
@@ -132,9 +129,8 @@ class MLConf:
             # 'max_depth': 71, 'bootstrap': False, 'criterion': 'gini', 'class_weight': {1: 1, 4: 1},
             # 'min_samples_leaf': 1, 'max_features': 'sqrt', 'min_samples_split': 7, 'n_estimators': 776,
             # extra
-            'class_weight': {1: 1, 4: 4}, 'max_depth': 98, 'criterion': 'gini', 'bootstrap': False,
-            'min_samples_leaf': 1, 'max_features': 'sqrt', 'min_samples_split': 4, 'n_estimators': 887,
-            'random_state': seed_no, 'n_jobs': n_jobs
+            'class_weight': {1: 2, 4: 1}, 'max_depth': 100,
+            # 'random_state': seed_no, 'n_jobs': n_jobs
         },
         'XGBoost': {
             # with scaler
@@ -143,9 +139,8 @@ class MLConf:
             # 'colsample_bytree': 0.598605740971479, 'gamma': 1, 'eta': 0.17994840726392214,
             # 'subsample': 0.7250606565532803,
             # extra
-            'n_estimators': 1638, 'colsample_bytree': 0.8721685761725149, 'min_child_weight': 2, 'gamma': 1,
-            'max_depth': 79, 'eta': 0.03649597209843184, 'subsample': 0.957596136356163, 'scale_pos_weight': 1,
-            'seed': seed_no, 'nthread': n_jobs
+            'max_depth': 72, 'n_estimators': 21, 'scale_pos_weight': 3,
+            # 'random_state': seed_no, 'nthread': n_jobs, 'objective': "binary:logistic",
         },
         'MLP': {
             # with scaler
@@ -153,77 +148,77 @@ class MLConf:
             # 'activation': 'logistic', 'solver': 'lbfgs', 'max_iter': 1000, 'tol': 0.0001,
             # 'learning_rate_init': 0.16533315728128767,
             # extra
-            'tol': 0.0001, 'learning_rate_init': 0.06794912926673598, 'max_iter': 1000, 'activation': 'logistic',
-            'solver': 'lbfgs',
-            'random_state': seed_no,
-        },
+            # 'activation': 'relu', 'hidden_layer_sizes': (100,),
+            'learning_rate_init': 0.05, 'max_iter': 5000, 'solver': 'lbfgs', 'tol': 0.003,
+        }
     }
 
     # These parameters constitute the search space for GridSearchCV in our experiments.
     SVM_hyperparameters = [
         {
             'kernel': ['rbf', 'sigmoid'],
-            'gamma': [1e-2, 0.1, 1, 10, 100, 'scale'],
-            'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
-            'tol': [1e-3, 1e-4],
-            'probability': [True, False],
-            'max_iter': [3000],
-            'class_weight': [None, 'balanced', {1: 1, 4: 2}, {1: 1, 4: 5}],
+            'gamma': [1e-2, 0.1, 1, 5, 10, 30, 'scale'],
+            'C': [0.01, 0.1, 1, 10, 100, 200, 300],
+            'tol': [1e-3, 1e-2],
+            # 'probability': [True, False],
+            'max_iter': [5000],
+            'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
         },
         {
             'kernel': ['poly'],
-            'gamma': [1e-2, 0.1, 1, 10, 100, 'scale'],
-            'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+            'gamma': ['auto', 'scale', 1, 10, 30],
+            'C': [0.01, 0.1, 1, 10, 100, 200, 300],
             'degree': [1, 2, 3],  # degree=1 is the same as using a 'linear' kernel
-            'tol': [1e-3, 1e-4],
-            'probability': [True, False],
-            'max_iter': [3000],
-            'class_weight': [None, 'balanced', {1: 1, 4: 2}, {1: 1, 4: 5}],
+            'tol': [1e-3, 1e-2],
+            # 'probability': [True, False],
+            'max_iter': [5000],
+            'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
         },
         # {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000], 'max_iter': [3000]}
     ]
     DecisionTree_hyperparameters = {
-        'max_depth': [i for i in range(5, 30, 5)] + [None],
-        'min_samples_split': [2, 4, 6, 10, 15, 25],
+        'max_depth': [2, 3, 5, 10, 30, 50, 60, 80, 100],
+        'min_samples_split': [2, 4, 6, 10, 15, 25, 50],
         'min_samples_leaf': [1, 2, 4, 10],
         # 'min_samples_split': list(np.linspace(0.1, 1, 10)),
         # 'min_samples_leaf': list(np.linspace(0.1, 0.5, 5)),
-        'max_features': list(np.linspace(0.1, 1.0, 10)) + ['auto', 'log2'],
-        'splitter': ('best', 'random'),
-        'class_weight': [None, 'balanced', {1: 1, 4: 2}, {1: 1, 4: 5}],
+        'max_features': list(np.arange(2, 11, 2)) + ["sqrt", "log2"],
+        'splitter': ['best', 'random'],
+        'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
     }
     RandomForest_hyperparameters = {
-        'bootstrap': [True, False],
-        'max_depth': [10, 20, 30, 50, 60, 100, None],
+        # 'bootstrap': [True, False],
+        'max_depth': [10, 20, 50, 60, 100, 150],
         'criterion': ['gini', 'entropy'],
         'max_features': ['log2', 'sqrt'],  # auto is equal to sqrt
-        'min_samples_leaf': [1, 2, 4],
-        'min_samples_split': [2, 5, 10],
-        "n_estimators": [250, 500, 1000],
-        'class_weight': [None, 'balanced', {1: 1, 4: 2}, {1: 1, 4: 5}],
+        # 'min_samples_leaf': [1, 2, 4],
+        'min_samples_split': [2, 3, 5, 10, 50],
+        "n_estimators": [100, 250, 500, 1000],
+        'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
     }
     XGBoost_hyperparameters = {
         "n_estimators": [500, 1000, 3000],
         # 'eta': list(np.linspace(0.01, 0.2, 10)),  # 'learning_rate'
         ## avoid overfitting
         # Control the model complexity
-        'max_depth': [3, 5, 10, 30, 50, 70, 100],
-        'gamma': [0, 1, 5],
+        'max_depth': [3, 10, 30, 50, 70, 100],
+        # 'gamma': [0, 1, 5],
         # 'alpha': [1, 10],
         # Add randomness to make training robust to noise
         'subsample': [0.8, 0.9, 1],
-        'colsample_bytree': list(np.linspace(0.3, 1, 3)),
+        # 'colsample_bytree': list(np.linspace(0.8, 1, 3)),
         # for class imbalances, setting the parameters
         # *) 'max_delta_step',
         # *) 'min_child_weight' and
         # *) 'scale_pos_weight'
         # could help
-        'scale_pos_weight': [1, 2, 5, 10],
+        'scale_pos_weight': [1, 2, 3],
         'min_child_weight': [1, 5, 10],
     }
     MLP_hyperparameters = {
-        'learning_rate_init': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1],
-        'max_iter': [1000],
+        'hidden_layer_sizes': [(100,), (50, 50,)],
+        'learning_rate_init': [0.0001, 0.005, 0.01, 0.05, 0.1],
+        'max_iter': [3000],
         'solver': ['lbfgs', 'sgd', 'adam'],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'tol': [1e-3, 1e-4],
@@ -234,42 +229,43 @@ class MLConf:
         'C': expon(scale=100),
         'gamma': expon(scale=.1),
         'kernel': ['rbf', 'poly', 'sigmoid'],
-        'class_weight': ['balanced', None] + [{1: 1, 4: w} for w in range(1, 10)],
+        'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
         'degree': [1, 2, 3],
-        'tol': [1e-3, 1e-4],
-        'max_iter': [3000]
+        'tol': [1e-3, 1e-2],
+        'max_iter': [10000]
     }
     DecisionTree_hyperparameters_dist = {
-        'max_depth': sp_randint(10, 100),
-        'min_samples_split': truncnorm(0.1, 1),
-        'min_samples_leaf': truncnorm(0.1, 0.5),
+        'max_depth': sp_randint(10, 200),
+        'min_samples_split': sp_randint(2, 200),
+        'min_samples_leaf': sp_randint(1, 10),
         'max_features': sp_randint(1, 11),
-        'class_weight': [None, 'balanced'] + [{1: 1, 4: w} for w in range(1, 10)],
+        'class_weight': [None, 'balanced'] + [{1: w, 4: 1} for w in range(1, 5)],
     }
     RandomForest_hyperparameters_dist = {
-        'bootstrap': [True, False],
-        'max_depth': sp_randint(3, 100),
+        # 'bootstrap': [True, False],
+        'max_depth': sp_randint(3, 200),
         'criterion': ['gini', 'entropy'],
         'max_features': ['sqrt', 'log2'],  # sp_randint(1, 11)
-        'min_samples_leaf': sp_randint(1, 50),
-        'min_samples_split': sp_randint(2, 11),
+        'min_samples_leaf': sp_randint(1, 10),
+        'min_samples_split': sp_randint(2, 21),
         "n_estimators": sp_randint(250, 1000),
-        'class_weight': ['balanced', None] + [{1: 1, 4: w} for w in range(1, 10)],
+        'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
     }
     XGBoost_hyperparameters_dist = {
         "n_estimators": sp_randint(500, 4000),
-        'eta': expon(loc=0.01, scale=0.1),  # 'learning_rate'
+        # 'eta': expon(loc=0.01, scale=0.1),  # 'learning_rate'
         # hyperparameters to avoid overfitting
-        'max_depth': sp_randint(3, 100),
-        'gamma': sp_randint(1, 5),
-        'subsample': truncnorm(0.7, 1),
-        'colsample_bytree': truncnorm(0, 1),
+        'max_depth': sp_randint(3, 200),
+        'gamma': sp_randint(0, 5),
+        'subsample': truncnorm(0.4, 0.7),
+        # 'colsample_bytree': truncnorm(0.8, 1),
         'min_child_weight': sp_randint(1, 10),
-        'scale_pos_weight': sp_randint(1, 30),
+        'scale_pos_weight': sp_randint(1, 5),
     }
     MLP_hyperparameters_dist = {
+        'hidden_layer_sizes': [(100,), (50, 50,)],
         'learning_rate_init': expon(loc=0.0001, scale=0.1),
-        'max_iter': [1000],
+        'max_iter': [3000],
         'solver': ['lbfgs', 'sgd', 'adam'],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'tol': [1e-3, 1e-4],

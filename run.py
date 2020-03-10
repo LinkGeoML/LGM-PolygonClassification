@@ -42,5 +42,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.2')
+    docopt_args = docopt(__doc__, version='LGM-PolygonClassification 0.2.3')
     main(docopt_args)

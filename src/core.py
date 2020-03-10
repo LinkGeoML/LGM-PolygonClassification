@@ -55,11 +55,8 @@ class StrategyEvaluator:
 
         start_time = time.time()
         # 3th phase: test the fine tuned best classifier on the test dataset
-        acc, pre, rec, f1, importances = pt.testClassifier(fX, ytest, estimator)
-        self._print_stats({
-            'classifier': best_clf['classifier'], 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score': f1,
-            'feature_importances': importances, 'time': start_time
-        })
+        res = pt.testClassifier(fX, ytest, estimator)
+        self._print_stats(best_clf['classifier'], res['metrics'], res['feature_imp'], start_time)
 
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
@@ -84,28 +81,31 @@ class StrategyEvaluator:
 
             tot_time = time.time(); start_time = time.time()
             # 1st phase: train each classifier on the whole train dataset (no folds)
-            estimator = pt.clf_names[clf][0](**config.MLConf.clf_custom_params[clf])
+            # estimator = pt.clf_names[clf][0](**config.MLConf.clf_custom_params[clf])
+            estimator = pt.clf_names[clf][0](random_state=config.seed_no)
+            estimator.set_params(**config.MLConf.clf_custom_params[clf])
             estimator = pt.trainClassifier(fX_train, ytrain, estimator)
+
             print("Finished training model on dataset; {} sec.".format(time.time() - start_time))
 
             start_time = time.time()
             # 2nd phase: test each classifier on the test dataset
-            acc, pre, rec, f1, importances = pt.testClassifier(fX_test, ytest, estimator)
-            self._print_stats({
-                'classifier': clf, 'accuracy': acc, 'precision': pre, 'recall': rec, 'f1_score': f1,
-                'feature_importances': importances, 'time': start_time
-            })
+            res = pt.testClassifier(fX_test, ytest, estimator)
+            self._print_stats(clf, res['metrics'], res['feature_imp'], start_time)
+            # if not os.path.exists('output'):
+            #     os.makedirs('output')
+            # np.savetxt(f'output/{clf}_default_stats.csv', res['metrics']['stats'], fmt="%u")
 
             print("The whole process took {} sec.\n".format(time.time() - tot_time))
 
-    def _print_stats(self, params):
+    def _print_stats(self, clf, params, fimp, tt):
         print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
         print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
-            params['classifier'], params['accuracy'], params['precision'], params['recall'], params['f1_score'],
-            time.time() - params['time']))
+            clf, params['accuracy'], params['precision'], params['recall'], params['f1_score'],
+            time.time() - tt))
 
-        if params['feature_importances'] is not None:
-            importances = np.ma.masked_equal(params['feature_importances'], 0.0)
+        if fimp is not None:
+            importances = np.ma.masked_equal(fimp, 0.0)
             if importances.mask is np.ma.nomask: importances.mask = np.zeros(importances.shape, dtype=bool)
 
             indices = np.argsort(importances.compressed())[::-1][
@@ -132,7 +132,7 @@ class StrategyEvaluator:
         X = data_df.drop('status', axis=1)
         y = data_df['status']
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=config.test_split_thres, random_state=config.seed_no, stratify=y
+            X, y, test_size=config.test_split_thres, random_state=config.seed_no, stratify=y, shuffle=True
         )
         y_train.reset_index(drop=True, inplace=True)
         y_test.reset_index(drop=True, inplace=True)

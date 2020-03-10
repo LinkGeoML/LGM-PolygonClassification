@@ -6,11 +6,12 @@ verify_ssl = true
 [dev-packages]
 sphinx-rtd-theme = "*"
 sphinx = "*"
+researchpy = "*"
 
 [packages]
 fiona = "*"
 geopandas = "*"
-scikit-learn = "*"
+scikit-learn = "==0.22.1"
 xgboost = "*"
 docopt = "*"
 tabulate = "*"

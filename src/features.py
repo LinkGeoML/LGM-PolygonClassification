@@ -34,9 +34,11 @@ class Features:
             The computed features to use as input to ML classifiers.
         """
         fX = np.asarray(list(map(self.compute, X['pst_geom'], X['dian_geom'])), dtype=float)
+        # print('Before normalization: ', np.amin(fX, axis=0), np.amax(fX, axis=0))
         fX = MinMaxScaler().fit_transform(fX)
         # fX = StandardScaler().fit_transform(fX)
         # fX = RobustScaler().fit_transform(fX)
+        # print('After normalization: ', np.amin(fX, axis=0), np.amax(fX, axis=0))
 
         if np.any(np.isnan(fX)): print(np.where(np.isnan(fX)))
         if not np.any(np.isfinite(fX)): print('infinite')
