@@ -12,15 +12,6 @@ LGM-PolygonClassification is a python library that implements a full Machine Lea
 Dependencies
 ------------
 * python 3
-* numpy
-* pandas
-* sklearn
-* geopandas
-* matplotlib
-* psycopg2
-* osmnx
-* shapely
-* argparse
 
 
 Instructions

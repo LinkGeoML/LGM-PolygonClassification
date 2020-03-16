@@ -4,14 +4,16 @@
 
 import time
 from sklearn.model_selection import train_test_split
+from joblib import dump, load
 import numpy as np
 import pandas as pd
 # We'll use this library to make the display pretty
 from tabulate import tabulate
+import os
 
-from src import param_tuning, config
-from src.features import Features
-from src.helpers import getRelativePathtoWorking, StaticValues
+from polygon_classification import param_tuning, config
+from polygon_classification.features import Features
+from polygon_classification.helpers import StaticValues
 
 
 class StrategyEvaluator:
@@ -23,7 +25,7 @@ class StrategyEvaluator:
     def __init__(self):
         pass
 
-    def hyperparamTuning(self):
+    def hyperparamTuning(self, dataset, classifiers):
         """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
         polygon classification problem.
         """
@@ -31,7 +33,7 @@ class StrategyEvaluator:
         f = Features()
 
         tot_time = time.time(); start_time = time.time()
-        Xtrain, Xtest, ytrain, ytest = self._load_and_split_data()
+        Xtrain, Xtest, ytrain, ytest = self._load_and_split_data(dataset)
         print("Loaded train/test datasets in {} sec.".format(time.time() - start_time))
 
         fX = f.build(Xtrain)
@@ -39,7 +41,7 @@ class StrategyEvaluator:
 
         start_time = time.time()
         # 1st phase: find and fine tune the best classifier from a list of candidate ones
-        best_clf = pt.fineTuneClassifiers(fX, ytrain)
+        best_clf = pt.fineTuneClassifiers(fX, ytrain, classifiers)
         estimator = best_clf['estimator']
         print("Best hyperparams, {}, with score {}; {} sec.".format(
             best_clf['hyperparams'], best_clf['score'], time.time() - start_time))
@@ -56,18 +58,18 @@ class StrategyEvaluator:
         start_time = time.time()
         # 3th phase: test the fine tuned best classifier on the test dataset
         res = pt.testClassifier(fX, ytest, estimator)
-        self._print_stats(best_clf['classifier'], res['metrics'], res['feature_imp'], start_time)
+        self._print_stats(best_clf['clf_name'], res['metrics'], res['feature_imp'], start_time)
 
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
-    def exec_classifiers(self):
+    def exec_classifiers(self, dataset):
         """Train and evaluate selected ML algorithms with custom hyper-parameters on dataset.
         """
         f = Features()
         pt = param_tuning.ParamTuning()
 
         start_time = time.time()
-        Xtrain, Xtest, ytrain, ytest = self._load_and_split_data()
+        Xtrain, Xtest, ytrain, ytest = self._load_and_split_data(dataset)
         print("Loaded train/test datasets in {} sec.".format(time.time() - start_time))
 
         fX_train = f.build(Xtrain)
@@ -98,6 +100,67 @@ class StrategyEvaluator:
 
             print("The whole process took {} sec.\n".format(time.time() - tot_time))
 
+    def train(self, dataset, classifiers):
+        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+        polygon classification problem.
+        """
+        pt = param_tuning.ParamTuning()
+        f = Features()
+
+        tot_time = time.time(); start_time = time.time()
+        data_df = pd.read_csv(dataset)
+        ytrain = data_df['status']
+        Xtrain = data_df.drop('status', axis=1)
+        print("Loaded train dataset in {} sec.".format(time.time() - start_time))
+
+        fX = f.build(Xtrain)
+        print("Build features from train data in {} sec.".format(time.time() - start_time))
+
+        start_time = time.time()
+        # 1st phase: find and fine tune the best classifier from a list of candidate ones
+        best_clf = pt.fineTuneClassifiers(fX, ytrain, classifiers)
+        estimator = best_clf['estimator']
+        print("Best hyperparams for {}, {}, with score {}; {} sec.".format(
+            best_clf['hyperparams'], best_clf['clf_name'], best_clf['score'], time.time() - start_time))
+
+        estimator = pt.trainClassifier(fX, ytrain, estimator)
+        os.makedirs(os.path.join(os.getcwd(), 'models'), exist_ok=True)
+        dump(estimator, os.path.join(os.getcwd(), 'models', best_clf['clf_name'] + '_model.joblib'))
+
+        print("The whole process took {} sec.".format(time.time() - tot_time))
+
+    def evaluate(self, dataset, classifier):
+        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+        polygon classification problem.
+        """
+        pt = param_tuning.ParamTuning()
+        f = Features()
+
+        tot_time = time.time(); start_time = time.time()
+        # Xtrain, Xtest, ytrain, ytest = self._load_and_split_data(dataset)
+        data_df = pd.read_csv(dataset)
+        ytest = data_df['status']
+        Xtest = data_df.drop('status', axis=1)
+        print("Loaded test dataset in {} sec.".format(time.time() - start_time))
+
+        start_time = time.time()
+        fX = f.build(Xtest)
+        print("Build features from test data in {} sec".format(time.time() - start_time))
+
+        start_time = time.time()
+        # 3th phase: test the fine tuned best classifier on the test dataset
+        estimator = load(os.path.join(os.getcwd(), 'models', classifier + '_model.joblib'))
+        res = pt.testClassifier(fX, ytest, estimator, True)
+        self._print_stats(classifier, res['metrics'], res['feature_imp'], start_time)
+
+        Xtest.reset_index(inplace=True)
+        Xtest = pd.concat([Xtest, pd.DataFrame(res['proba'], columns=['none_origin_pred', 'dian_origin_pred'])], axis=1)
+        os.makedirs('output', exist_ok=True)
+        Xtest[['pst_geom', 'dian_geom', 'none_origin_pred', 'dian_origin_pred']].to_csv(
+            os.path.join('output', 'predictions.csv'), index=False)
+
+        print("The whole process took {} sec.".format(time.time() - tot_time))
+
     def _print_stats(self, clf, params, fimp, tt):
         print("| Method\t\t& Accuracy\t& Precision\t& Recall\t& F1-Score\t& Time (sec)")
         print("||{0}\t& {1}\t& {2}\t& {3}\t& {4}\t& {5}".format(
@@ -120,8 +183,8 @@ class StrategyEvaluator:
 
         print()
 
-    def _load_and_split_data(self):
-        data_df = pd.read_csv(getRelativePathtoWorking(config.dataset))
+    def _load_and_split_data(self, dataset):
+        data_df = pd.read_csv(dataset)
         # dian_df = gpd.read_file(getRelativePathtoWorking(config.dian))
         # dian_df.rename(columns={"geometry": "dian_geom"}, inplace=True)
         # data_df = data_df.merge(
@@ -134,6 +197,9 @@ class StrategyEvaluator:
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=config.test_split_thres, random_state=config.seed_no, stratify=y, shuffle=True
         )
+        # pd.concat([X_train, y_train], axis=1).to_csv('data/train_dataset.csv', index=False)
+        # pd.concat([X_test, y_test], axis=1).to_csv('data/test_dataset.csv', index=False)
+
         y_train.reset_index(drop=True, inplace=True)
         y_test.reset_index(drop=True, inplace=True)
 

@@ -1,7 +1,7 @@
 # Author: vkaff
 # E-mail: vkaffes@imis.athena-innovation.gr
 
-from src import config
+from polygon_classification import config
 
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -56,7 +56,7 @@ class ParamTuning:
         self.search_method = config.MLConf.hyperparams_search_method
         self.n_iter = config.MLConf.max_iter
 
-    def fineTuneClassifiers(self, X, y):
+    def fineTuneClassifiers(self, X, y, classifiers):
         """Search over specified parameter values for various estimators/classifiers and choose the best one.
 
         This method searches over specified values and selects the classifier that
@@ -96,12 +96,14 @@ class ParamTuning:
         """
         hyperparams_data = list()
 
-        for clf_key in config.MLConf.classifiers:
+        for clf_key in classifiers:
             try:
+                print(f'Tuning {clf_key}...')
+
                 clf = None
                 if self.search_method.lower() == 'grid':
                     clf = GridSearchCV(
-                        self.clf_names[clf_key][0](), self.clf_names[clf_key][1],
+                        self.clf_names[clf_key][0](random_state=config.seed_no), self.clf_names[clf_key][1],
                         cv=self.outer_cv, scoring=config.MLConf.score, verbose=1, n_jobs=self.n_jobs
                     )
                 # elif self.search_method.lower() == 'hyperband' and clf_key in ['XGBoost', 'Extra-Trees', 'Random Forest']:
@@ -124,7 +126,7 @@ class ParamTuning:
                 hyperparams_found['results'] = clf.cv_results_
                 hyperparams_found['hyperparams'] = clf.best_params_
                 hyperparams_found['estimator'] = clf.best_estimator_
-                hyperparams_found['classifier'] = clf_key
+                hyperparams_found['clf_name'] = clf_key
                 hyperparams_found['scorers'] = clf.scorer_
 
                 hyperparams_data.append(hyperparams_found)
@@ -157,7 +159,7 @@ class ParamTuning:
         model.fit(X_train, y_train)
         return model
 
-    def testClassifier(self, X_test, y_test, model):
+    def testClassifier(self, X_test, y_test, model, proba=False):
         """Evaluate a classifier on a testing set (X_test, y_test).
 
         Parameters
@@ -176,11 +178,14 @@ class ParamTuning:
             the test dataset.
         """
         y_pred = model.predict(X_test)
+        y_proba = None
+        if proba:
+            y_proba = model.predict_proba(X_test)
 
         acc = accuracy_score(y_test, y_pred)
-        pre = precision_score(y_test, y_pred)
-        rec = recall_score(y_test, y_pred)
-        f1 = f1_score(y_test, y_pred)
+        pre = precision_score(y_test, y_pred, average='macro')
+        rec = recall_score(y_test, y_pred, average='macro')
+        f1 = f1_score(y_test, y_pred, average='macro')
         res = np.equal(y_test.to_numpy(), y_pred)
 
         fimportance = None
@@ -189,4 +194,8 @@ class ParamTuning:
         # elif hasattr(model, 'coef_'):
         #     fimportance = model.coef_
 
-        return dict(metrics=dict(accuracy=acc, precision=pre, recall=rec, f1_score=f1, stats=res), feature_imp=fimportance)
+        return dict(
+            metrics=dict(accuracy=acc, precision=pre, recall=rec, f1_score=f1, stats=res),
+            feature_imp=fimportance,
+            proba=y_proba
+        )

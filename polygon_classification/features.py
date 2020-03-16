@@ -3,7 +3,7 @@
 # E-mail: vkaffes@imis.athena-innovation.gr
 
 import numpy as np
-from src import config
+from polygon_classification import config
 from shapely.geometry import LineString, Point
 from shapely.wkt import loads
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler

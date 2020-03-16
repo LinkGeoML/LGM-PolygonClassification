@@ -49,7 +49,7 @@ class MLConf:
 
     kfold_parameter = 5  #: int: The number of outer folds that splits the dataset for the k-fold cross-validation.
 
-    n_jobs = 4  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
+    n_jobs = -1  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
 
     #: bool: Whether to build additional features or not, i.e., convex hull of polygons and dist of centroids.
     extra_features = True
@@ -65,7 +65,7 @@ class MLConf:
 
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_
     #: search_method` equals to 'randomized'.
-    max_iter = 500
+    max_iter = 300
 
     score = 'accuracy'
     """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_. 
@@ -188,22 +188,22 @@ class MLConf:
     }
     RandomForest_hyperparameters = {
         # 'bootstrap': [True, False],
-        'max_depth': [10, 20, 50, 60, 100, 150],
+        'max_depth': [5, 10, 20, 50, 70, 100],
         'criterion': ['gini', 'entropy'],
-        'max_features': ['log2', 'sqrt'],  # auto is equal to sqrt
+        # 'max_features': ['log2', 'sqrt'],  # auto is equal to sqrt
         # 'min_samples_leaf': [1, 2, 4],
-        'min_samples_split': [2, 3, 5, 10, 50],
-        "n_estimators": [100, 250, 500, 1000],
+        'min_samples_split': [2, 3, 5],
+        "n_estimators": [100, 120, 200, 250],
         'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
     }
     XGBoost_hyperparameters = {
-        "n_estimators": [500, 1000, 3000],
+        "n_estimators": [20, 30, 100, 300],
         # 'eta': list(np.linspace(0.01, 0.2, 10)),  # 'learning_rate'
         ## avoid overfitting
         # Control the model complexity
-        'max_depth': [3, 10, 30, 50, 70, 100],
-        # 'gamma': [0, 1, 5],
-        # 'alpha': [1, 10],
+        'max_depth': [10, 30, 50, 70, 100],
+        'gamma': [0, 1, 5],
+        # 'reg_alpha': [1, 10],
         # Add randomness to make training robust to noise
         'subsample': [0.8, 0.9, 1],
         # 'colsample_bytree': list(np.linspace(0.8, 1, 3)),
@@ -213,7 +213,7 @@ class MLConf:
         # *) 'scale_pos_weight'
         # could help
         'scale_pos_weight': [1, 2, 3],
-        'min_child_weight': [1, 5, 10],
+        # 'min_child_weight': [1, 5, 10],
     }
     MLP_hyperparameters = {
         'hidden_layer_sizes': [(100,), (50, 50,)],
@@ -252,15 +252,17 @@ class MLConf:
         'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
     }
     XGBoost_hyperparameters_dist = {
-        "n_estimators": sp_randint(500, 4000),
+        "n_estimators": sp_randint(20, 200),
         # 'eta': expon(loc=0.01, scale=0.1),  # 'learning_rate'
         # hyperparameters to avoid overfitting
-        'max_depth': sp_randint(3, 200),
+        'max_depth': sp_randint(10, 200),
         'gamma': sp_randint(0, 5),
         'subsample': truncnorm(0.4, 0.7),
         # 'colsample_bytree': truncnorm(0.8, 1),
-        'min_child_weight': sp_randint(1, 10),
+        # 'min_child_weight': sp_randint(1, 10),
         'scale_pos_weight': sp_randint(1, 5),
+        "reg_alpha": truncnorm(0, 2),
+        'reg_lambda': sp_randint(1, 20),
     }
     MLP_hyperparameters_dist = {
         'hidden_layer_sizes': [(100,), (50, 50,)],

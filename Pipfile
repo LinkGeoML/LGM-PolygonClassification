@@ -13,8 +13,8 @@ fiona = "*"
 geopandas = "*"
 scikit-learn = "==0.22.1"
 xgboost = "*"
-docopt = "*"
 tabulate = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
