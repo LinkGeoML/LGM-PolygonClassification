@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -151,50 +151,117 @@
             
   <div class="section" id="welcome-to-lgm-polygonclassification-s-documentation">
 <h1>Welcome to LGM-PolygonClassification’s documentation!<a class="headerlink" href="#welcome-to-lgm-polygonclassification-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a></p>
+<hr class="docutils" />
 <div class="section" id="lgm-polygonclassification">
 <h2>LGM-PolygonClassification<a class="headerlink" href="#lgm-polygonclassification" title="Permalink to this headline">¶</a></h2>
-<p>A python library for accurate classification of polygon types.</p>
+<p>A python library for effectively classifying land parcel polygons with respect to their provenance information.</p>
 <div class="section" id="about-lgm-polygonclassification">
 <h3>About LGM-PolygonClassification<a class="headerlink" href="#about-lgm-polygonclassification" title="Permalink to this headline">¶</a></h3>
-<p>LGM-PolygonClassification is a python library that implements a full Machine Learning workflow for training classification algorithms on annotated datasets that contain pairs of matched polygons each one of which belongs to a distinct polygon variant. LGM-PolygonClassification implements a series of training features by taking into consideration the individual characteristics of each polygon as well as including information about the geospatial relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality, based on the [scikit](<a class="reference external" href="https://scikit-learn.org/">https://scikit-learn.org/</a>) toolkit, assessing as series of classification models and parameterizations, in order to find the most fitting model for the data at hand.</p>
+<p>LGM-PolygonClassification is a python library that implements a full Machine Learning workflow for training
+classification algorithms on annotated datasets that contain pairs of matched polygons each one of which belongs to a
+distinct polygon variant. LGM-PolygonClassification implements a series of training features by taking into
+consideration the individual characteristics of each polygon as well as including information about the geospatial
+relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality,
+based on the <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> toolkit, assessing as series of classification models and
+parameterizations, in order to find the most fitting model for the data at hand.</p>
+<p>The source code was tested using Python 3 (&gt;=3.6) and Scikit-Learn 0.22.1 on a Linux server.</p>
 <div class="section" id="dependencies">
 <h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>python 3</p></li>
-<li><p>numpy</p></li>
-<li><p>pandas</p></li>
-<li><p>sklearn</p></li>
-<li><p>geopandas</p></li>
-<li><p>matplotlib</p></li>
-<li><p>psycopg2</p></li>
-<li><p>osmnx</p></li>
-<li><p>shapely</p></li>
-<li><p>argparse</p></li>
+<li><p>python&gt;=3.6</p></li>
+<li><p>click==7.1.1</p></li>
+<li><p>fiona==1.8.13.post1</p></li>
+<li><p>geopandas==0.7.0</p></li>
+<li><p>numpy==1.18.1</p></li>
+<li><p>pandas==1.0.2</p></li>
+<li><p>scikit-learn==0.22.1</p></li>
+<li><p>scipy==1.4.1</p></li>
+<li><p>shapely==1.7.0</p></li>
+<li><p>tabulate==0.8.6</p></li>
+<li><p>xgboost==1.0.2</p></li>
 </ul>
 </div>
-<div class="section" id="instructions">
-<h4>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="setup-procedure">
+<h4>Setup procedure<a class="headerlink" href="#setup-procedure" title="Permalink to this headline">¶</a></h4>
+<p>Download the latest version from the <a class="reference external" href="https://github.com/LinkGeoML/LGM-PolygonClassification.git">GitHub repository</a>,
+change to the main directory and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r pip_requirements.txt
+</pre></div>
 </div>
-<div class="section" id="license">
-<h4>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h4>
-<p>LGM-PolygonClassification is available under the MIT License.</p>
-<div class="section" id="module-run">
-<span id="how-to-use"></span><h5>How to use<a class="headerlink" href="#module-run" title="Permalink to this headline">¶</a></h5>
-<p>A complete pipeline of processes for features extraction and training/evaluating state-of-the-art classifiers for
-polygon classification.</p>
-<p>Command line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span>
-  <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
-  <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="o">--</span><span class="n">help</span><span class="p">)</span>
-  <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">version</span>
+<p>It should install all required <a class="reference internal" href="#dependencies">dependencies</a> automatically.</p>
+</div>
+<div class="section" id="how-to-use">
+<h4>How to use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h4>
+<p>The input dataset need to be in CSV format. Specifically, a valid dataset should have at least the following
+fields/columns:</p>
+<ul class="simple">
+<li><p>The geometry of the initial, land allocated polygon.</p></li>
+<li><p>The geometry of final polygon.</p></li>
+<li><p>The ORI_TYPE label, i.e., {1, 4}, that denotes the dominant provenance of final polygon, i.e., land parcel.</p></li>
+</ul>
+<p>The library implements the following distinct processes:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Features extraction</dt><dd><p>The <a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/features.html#polygon_classification.features.Features">build</a> function constructs a set of training features to use within classifiers for toponym interlinking.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Algorithm and model selection</dt><dd><p>The functionality of the
+<a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers">fineTuneClassifiers</a> function is twofold.
+Firstly, it chooses among a list of supported machine learning algorithms the one that achieves the highest average
+accuracy score on the examined dataset. Secondly, it searches for the best model, i.e., the best hyper-parameters
+for the best identified algorithm in the first step.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Model training</dt><dd><p>The <a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.param_tuning.ParamTuning.trainClassifier">trainClassifier</a> trains the best selected model on previous
+process, i.e., an ML algorithm with tuned hyperparameters that best fits data, on the whole train dataset, without
+splitting it in folds.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Model deployment</dt><dd><p>The <a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.param_tuning.ParamTuning.testClassifier">testClassifier</a> applies the trained model on new untested data.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>A complete pipeline of the above processes, i.e., features extraction, training and evaluating state-of-the-art
+classifiers, for polygon classification, i.e., provenance recommendation of a land parcel, can be executed with the
+following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m interlinking.cli train --dataset &lt;path/to/train-dataset&gt;
+$ python -m interlinking.cli evaluate --dataset &lt;path/to/train-dataset&gt;
+--test_set &lt;path/to/test-dataset&gt;
+</pre></div>
+</div>
+<p>Additionally, <em>help</em> is available on the command line interface (<em>CLI</em>). Enter the following to list all supported
+commands or options for a given command with a short description.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m polygon_classification.cli –h
 
-<span class="n">Options</span><span class="p">:</span>
-    <span class="o">-</span><span class="n">h</span> <span class="o">--</span><span class="n">help</span>                   <span class="n">show</span> <span class="n">this</span> <span class="n">screen</span><span class="o">.</span>
-    <span class="o">--</span><span class="n">version</span>                   <span class="n">show</span> <span class="n">version</span><span class="o">.</span>
-    <span class="o">--</span><span class="n">customparams</span>              <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="kc">False</span><span class="p">]</span><span class="o">.</span>
+Usage: cli.py <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  evaluate  evaluate the effectiveness of the proposed methods
+  train     tune various classifiers and <span class="k">select</span> the best hyper-parameters on a train dataset
 </pre></div>
 </div>
 </div>
+<div class="section" id="documentation">
+<h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
+<p>Source code documentation is available from <a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/">linkgeoml.github.io</a>.</p>
+</div>
+<div class="section" id="license">
+<h4>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h4>
+<p>LGM-Interlinking is available under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT</a> License.</p>
+<div class="section" id="id2">
+<h5>How to use<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
+<span class="target" id="module-polygon_classification.cli.run"></span></div>
 <div class="section" id="api-reference">
 <h5>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h5>
 <p>View the auto-generated API documentation for information on a specific function, class, or method.</p>

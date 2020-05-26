@@ -14,7 +14,7 @@ class Features:
 
     See Also
     --------
-    :func:`compute_features`: Details on the implemented features.
+    :func:`compute`: Details on the implemented features.
     """
 
     def __init__(self):
@@ -56,8 +56,8 @@ class Features:
             #. number of corners of each polygon,
             #. average edges' length per corner of each polygon,
             #. variance of edges' length per corner of each polygon,
-        * *extra*: these features are computed only when parameter :py:attr:`~src.config.MLConf.extra_features` is set
-           to True value. In such case, the following additional features are calculated:
+        * *extra*: these features are computed only when parameter :py:attr:`~polygon_classification.config.MLConf.extra_features`
+            is set to True value. In such case, the following additional features are calculated:
             #. area of of each polygon convex hull,
             #. percentage of coverage/intersection of convex hull area per polygon,
             #. distance of centroids of polygons

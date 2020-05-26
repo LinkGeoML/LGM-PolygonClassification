@@ -50,8 +50,9 @@ How to use
 The input dataset need to be in CSV format. Specifically, a valid dataset should have at least the following
 fields/columns:
 
-* The names for each of the candidate toponym pairs.
-* The label, i.e., {True, False}, assigned to each toponym pair.
+* The geometry of the initial, land allocated polygon.
+* The geometry of final polygon.
+* The ORI\_TYPE label, i.e., {1, 4}, that denotes the dominant provenance of final polygon, i.e., land parcel.
 
 The library implements the following distinct processes:
 

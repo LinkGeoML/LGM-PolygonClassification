@@ -160,7 +160,7 @@
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_features()</span></code></dt><dd><p>Details on the implemented features.</p>
+<dt><a class="reference internal" href="#polygon_classification.features.Features.compute" title="polygon_classification.features.Features.compute"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute()</span></code></a></dt><dd><p>Details on the implemented features.</p>
 </dd>
 </dl>
 </div>
@@ -199,14 +199,10 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt><em>extra</em>: these features are computed only when parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">extra_features</span></code> is set</dt><dd><dl class="simple">
-<dt>to True value. In such case, the following additional features are calculated:</dt><dd><ol class="arabic simple">
-<li><p>area of of each polygon convex hull,</p></li>
-<li><p>percentage of coverage/intersection of convex hull area per polygon,</p></li>
-<li><p>distance of centroids of polygons</p></li>
-</ol>
-</dd>
-</dl>
+<dt><em>extra</em>: these features are computed only when parameter <a class="reference internal" href="config.html#polygon_classification.config.MLConf.extra_features" title="polygon_classification.config.MLConf.extra_features"><code class="xref py py-attr docutils literal notranslate"><span class="pre">extra_features</span></code></a></dt><dd><p>is set to True value. In such case, the following additional features are calculated:
+#. area of of each polygon convex hull,
+#. percentage of coverage/intersection of convex hull area per polygon,
+#. distance of centroids of polygons</p>
 </dd>
 </dl>
 </li>

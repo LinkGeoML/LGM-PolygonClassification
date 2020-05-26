@@ -60,7 +60,7 @@ class MLConf:
     
     See Also
     --------
-    :func:`~src.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
+    :func:`~polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
     """
 
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_
