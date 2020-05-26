@@ -56,9 +56,7 @@ class Features:
             #. number of corners of each polygon,
             #. average edges' length per corner of each polygon,
             #. variance of edges' length per corner of each polygon,
-        * *extra*: these features are computed only when parameter :py:attr:`~polygon_classification.config.MLConf.extra_features`
-            is set to True value. In such case, the following additional features are calculated:
-
+        * *extra*: compute additional features on setting :py:attr:`~polygon_classification.config.MLConf.extra_features` to ``True``, i.e.,
             1. area of of each polygon convex hull,
             #. percentage of coverage/intersection of convex hull area per polygon,
             #. distance of centroids of polygons
