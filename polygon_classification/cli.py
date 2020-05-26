@@ -5,12 +5,12 @@ import os
 from polygon_classification.core import StrategyEvaluator
 
 
-@click.group()
+@click.group(context_settings=dict(max_content_width=120, help_option_names=['-h', '--help']))
 def cli():
     pass
 
 
-@cli.command()
+@cli.command(help='tune various classifiers and select the best hyper-parameters on a train dataset')
 @click.option('--dataset', default='train_dataset.csv', help='Path to train dataset')
 @click.option('--classifiers', default='RandomForest', help='ML classifiers to tune')
 def train(dataset, classifiers):
@@ -27,7 +27,7 @@ def train(dataset, classifiers):
         print("Train dataset file is not found!!!\n")
 
 
-@cli.command()
+@cli.command(help='evaluate the effectiveness of the proposed methods')
 @click.option('--dataset', default='test_dataset.csv', help='Path to test dataset')
 @click.option('--classifier', default='RandomForest', help='ML classifier to predict')
 def evaluate(dataset, classifier):
