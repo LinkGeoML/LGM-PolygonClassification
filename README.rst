@@ -1,71 +1,121 @@
+|MIT|
+
+=====
+
 #########################
 LGM-PolygonClassification
 #########################
-
-A python library for accurate classification of polygon types.
+A python library for effectively classifying land parcel polygons with respect to their provenance information.
 
 ===============================
 About LGM-PolygonClassification
 ===============================
-LGM-PolygonClassification is a python library that implements a full Machine Learning workflow for training classification algorithms on annotated datasets that contain pairs of matched polygons each one of which belongs to a distinct polygon variant. LGM-PolygonClassification implements a series of training features by taking into consideration the individual characteristics of each polygon as well as including information about the geospatial relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality, based on the [scikit](https://scikit-learn.org/) toolkit, assessing as series of classification models and parameterizations, in order to find the most fitting model for the data at hand.
+LGM-PolygonClassification is a python library that implements a full Machine Learning workflow for training
+classification algorithms on annotated datasets that contain pairs of matched polygons each one of which belongs to a
+distinct polygon variant. LGM-PolygonClassification implements a series of training features by taking into
+consideration the individual characteristics of each polygon as well as including information about the geospatial
+relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality,
+based on the `scikit-learn <https://scikit-learn.org/>`_ toolkit, assessing as series of classification models and
+parameterizations, in order to find the most fitting model for the data at hand.
+
+The source code was tested using Python 3 (>=3.6) and Scikit-Learn 0.22.1 on a Linux server.
 
 Dependencies
 ------------
-* python 3
+* python>=3.6
+* click==7.1.1
+* fiona==1.8.13.post1
+* geopandas==0.7.0
+* numpy==1.18.1
+* pandas==1.0.2
+* scikit-learn==0.22.1
+* scipy==1.4.1
+* shapely==1.7.0
+* tabulate==0.8.6
+* xgboost==1.0.2
 
+Setup procedure
+---------------
+Download the latest version from the `GitHub repository <https://github.com/LinkGeoML/LGM-PolygonClassification.git>`_,
+change to the main directory and run:
 
-Instructions
-------------
+.. code-block:: bash
 
-.. In order for the library to function the user must provide it with a .csv file containing a collection of matched polygon pairs. The first column must contain the polygon shapely geometries (in string form) that belong to the first polygon class, while the second column must contain their matched counterparts that belong to the second polygon class. The process of polygon matching is also supported by the library, provided that a pair of shapefiles containing polygon information (one for each polygon class) is available.
+   pip install -r pip_requirements.txt
 
-.. **Polygon matching**: the process of matching polygons can be executing by calling the match_polygons.py script as follows:
-.. ```python match_polygons.py -dian_shapefile_name <shapefile that corresponds to the first class polygons> -pst_shapefile_name <shapefile that corresponds to the second class polygons>```.
+It should install all required `dependencies`_ automatically.
 
-.. **Algorithm evaluation/selection**: consists of an exhaustive comparison between several classification algorithms that are available in the scikit-learn library. Its purpose is to
-.. compare the performance of every algorithm-hyperparameter configuration in a nested cross-validation scheme and produce the best candidate-algorithm for further usage. More specifically this step outputs three files:
+How to use
+----------
+The input dataset need to be in CSV format. Specifically, a valid dataset should have at least the following
+fields/columns:
 
-.. * a file consisting of the algorithm and parameters space that was searched,
-.. * a file containing the results per cross-validation fold and their averages and
-.. * a file containing the name of the best model.
+* The names for each of the candidate toponym pairs.
+* The label, i.e., {True, False}, assigned to each toponym pair.
 
-.. You can execute this step as follows: ```python find_best_clf.py -polygon_file_name <csv containing polygon pairs information> -results_file_name <desired name of the csv to contain the metric results per fold> -hyperparameter_file_name <desired name of the file to contain the hyperparameter space that was searched>```.
+The library implements the following distinct processes:
 
-.. The last two arguments are optional and their values are defaulted to:
+#. Features extraction
+    The `build <https://linkgeoml.github.io/LGM-PolygonClassification/features.html#polygon_classification.features.
+    Features>`_ function constructs a set of training features to use within classifiers for toponym interlinking.
 
-.. * classification_report_*timestamp*, and
-.. * hyperparameters_per_fold_*timestamp*
+#. Algorithm and model selection
+    The functionality of the
+    `fineTuneClassifiers <https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.
+    param_tuning.ParamTuning.fineTuneClassifiers>`_ function is twofold.
+    Firstly, it chooses among a list of supported machine learning algorithms the one that achieves the highest average
+    accuracy score on the examined dataset. Secondly, it searches for the best model, i.e., the best hyper-parameters
+    for the best identified algorithm in the first step.
 
-.. correspondingly
+#. Model training
+    The `trainClassifier <https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.
+    param_tuning.ParamTuning.trainClassifier>`_ trains the best selected model on previous
+    process, i.e., an ML algorithm with tuned hyperparameters that best fits data, on the whole train dataset, without
+    splitting it in folds.
 
-.. **Algorithm tuning**: The purpose of this step is to further tune the specific algorithm that was chosen in step 1 by comparing its performance while altering the hyperparameters with which it is being configured. This step outputs the hyperparameter selection corresponding to the best model.
+#. Model deployment
+    The `testClassifier <https://linkgeoml.github.io/LGM-PolygonClassification/tuning.html#polygon_classification.
+    param_tuning.ParamTuning.testClassifier>`_ applies the trained model on new untested data.
 
-.. You can execute this step as follows: ```python finetune_best_clf.py -polygon_file_name <csv containing polygon pairs information> -best_hyperparameter_file_name <desired name of the file to contain the best hyperparameters that were selected for the best algorithm of step 1> -best_clf_file_name <file containing the name of the best classifier>```.
+A complete pipeline of the above processes, i.e., features extraction, training and evaluating state-of-the-art
+classifiers, for polygon classification, i.e., provenance recommendation of a land parcel, can be executed with the
+following command:
 
-.. All arguments except pois_csv_name are optional and their values are defaulted to:
+.. code-block:: bash
 
-.. * best_hyperparameters_*category level*_*timestamp*.csv
-.. * the latest file with the *best_clf_* prefix
+    $ python -m interlinking.cli train --dataset <path/to/train-dataset>
+    $ python -m interlinking.cli evaluate --dataset <path/to/train-dataset>
+    --test_set <path/to/test-dataset>
 
-.. **Model training on a specific training set**: This step handles the training of the final model on an entire dataset, so that it can be used in future cases. It outputs a pickle file in which the model is stored.
+Additionally, *help* is available on the command line interface (*CLI*). Enter the following to list all supported
+commands or options for a given command with a short description.
 
-.. You can execute this step as follows: ```python export_best_model.py -polygon_file_name <csv containing polygon pairs information> -best_hyperparameter_file_name <csv containing best hyperparameter configuration for the classifier -best_clf_file_name <file containing the name of the best classifier> -trained_model_file_name <name of file where model must be exported>```.
+.. code-block:: bash
 
-.. All arguments except pois_csv_name are optional and their values are defaulted to:
+    $ python -m polygon_classification.cli –h
 
-.. * the latest file with the *best_hyperparameters_* prefix
-.. * the latest file with the best_clf_* prefix
-.. * trained_model_*level*_*timestamp*.pkl
+    Usage: cli.py [OPTIONS] COMMAND [ARGS]...
 
-.. correspondingly.
+    Options:
+      -h, --help  Show this message and exit.
 
-.. **Predictions on novel data**: This step can be executed as: ```python export_predictions.py -polygon_file_name <csv containing polygon pairs information> -results_file_name <desired name of the output csv> -trained_model_file_name <pickle file containing an already trained model>```
+    Commands:
+      evaluate  evaluate the effectiveness of the proposed methods
+      train     tune various classifiers and select the best hyper-parameters on a train dataset
 
-.. The output .csv file will contain the k most probable predictions regarding the category of each POI. If no arguments for output_csv are given, their values are defaulted to:
+Documentation
+-------------
+Source code documentation is available from `linkgeoml.github.io`__.
 
-.. * output_csv = predictions_*timestamp*.csv and
-.. * trained_model_file_name = *name of the latest produced pickle file in the working directory*.
+__ https://linkgeoml.github.io/LGM-PolygonClassification/
 
 License
 -------
-LGM-PolygonClassification is available under the MIT License.
+LGM-Interlinking is available under the `MIT <https://opensource.org/licenses/MIT>`_ License.
+
+..
+    .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
+       :target: https://linkgeoml.github.io/LGM-Interlinking/
+
+.. |MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+   :target: https://opensource.org/licenses/MIT

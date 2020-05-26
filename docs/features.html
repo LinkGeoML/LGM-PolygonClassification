@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -153,9 +153,9 @@
   <div class="section" id="features">
 <h1>features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
 <blockquote>
-<div><dl class="class">
-<dt id="src.features.Features">
-<em class="property">class </em><code class="sig-prename descclassname">src.features.</code><code class="sig-name descname">Features</code><a class="reference internal" href="_modules/src/features.html#Features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features" title="Permalink to this definition">¶</a></dt>
+<div><dl class="py class">
+<dt id="polygon_classification.features.Features">
+<em class="property">class </em><code class="sig-prename descclassname">polygon_classification.features.</code><code class="sig-name descname">Features</code><a class="reference internal" href="_modules/polygon_classification/features.html#Features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.features.Features" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class builds features regarding polygon properties.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -164,9 +164,9 @@
 </dd>
 </dl>
 </div>
-<dl class="method">
-<dt id="src.features.Features.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/features.html#Features.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features.build" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.features.Features.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/features.html#Features.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.features.Features.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build features and return them as an ndarray of floats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -181,9 +181,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="src.features.Features.compute">
-<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param">poly1</em>, <em class="sig-param">poly2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/features.html#Features.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.features.Features.compute" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.features.Features.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">poly1</span></em>, <em class="sig-param"><span class="n">poly2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/features.html#Features.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.features.Features.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method builds an ndarray of the following features:</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -199,7 +199,7 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt><em>extra</em>: these features are computed only when parameter <a class="reference internal" href="config.html#src.config.MLConf.extra_features" title="src.config.MLConf.extra_features"><code class="xref py py-attr docutils literal notranslate"><span class="pre">extra_features</span></code></a> is set</dt><dd><dl class="simple">
+<dt><em>extra</em>: these features are computed only when parameter <code class="xref py py-attr docutils literal notranslate"><span class="pre">extra_features</span></code> is set</dt><dd><dl class="simple">
 <dt>to True value. In such case, the following additional features are calculated:</dt><dd><ol class="arabic simple">
 <li><p>area of of each polygon convex hull,</p></li>
 <li><p>percentage of coverage/intersection of convex hull area per polygon,</p></li>

@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -153,9 +153,9 @@
   <div class="section" id="tuning">
 <h1>tuning<a class="headerlink" href="#tuning" title="Permalink to this headline">¶</a></h1>
 <blockquote>
-<div><dl class="class">
-<dt id="src.param_tuning.ParamTuning">
-<em class="property">class </em><code class="sig-prename descclassname">src.param_tuning.</code><code class="sig-name descname">ParamTuning</code><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning" title="Permalink to this definition">¶</a></dt>
+<div><dl class="py class">
+<dt id="polygon_classification.param_tuning.ParamTuning">
+<em class="property">class </em><code class="sig-prename descclassname">polygon_classification.param_tuning.</code><code class="sig-name descname">ParamTuning</code><a class="reference internal" href="_modules/polygon_classification/param_tuning.html#ParamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.param_tuning.ParamTuning" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the methods for fine tuning hyperparameters, training and testing various
 classification models for polygon classification. The following classifiers are examined:</p>
 <ul class="simple">
@@ -166,15 +166,15 @@ classification models for polygon classification. The following classifiers are 
 <li><p>Extra-Trees</p></li>
 <li><p>eXtreme Gradient Boosting (XGBoost)</p></li>
 </ul>
-<dl class="method">
-<dt id="src.param_tuning.ParamTuning.fineTuneClassifiers">
-<code class="sig-name descname">fineTuneClassifiers</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.fineTuneClassifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.fineTuneClassifiers" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers">
+<code class="sig-name descname">fineTuneClassifiers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">classifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/param_tuning.html#ParamTuning.fineTuneClassifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search over specified parameter values for various estimators/classifiers and choose the best one.</p>
 <p>This method searches over specified values and selects the classifier that
 achieves the best avg accuracy score for all evaluations. The supported search methods are:</p>
 <ul class="simple">
 <li><p><em>GridSearchCV</em>: Exhaustive search over specified parameter values for supported estimators.
-The following variables are defined in <a class="reference internal" href="config.html#src.config.MLConf" title="src.config.MLConf"><code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code></a> :</p></li>
+The following variables are defined in <code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code> :</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
@@ -186,9 +186,9 @@ The following variables are defined in <a class="reference internal" href="confi
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li><p><em>RandomizedSearchCV</em>: Randomized search over continuous distribution space. <a class="reference internal" href="config.html#src.config.MLConf.max_iter" title="src.config.MLConf.max_iter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code></a>
-defines the number of parameter settings that are sampled. <a class="reference internal" href="config.html#src.config.MLConf.max_iter" title="src.config.MLConf.max_iter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code></a> trades off
-runtime vs quality of the solution. The following variables are defined in <a class="reference internal" href="config.html#src.config.MLConf" title="src.config.MLConf"><code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code></a> :</p></li>
+<li><p><em>RandomizedSearchCV</em>: Randomized search over continuous distribution space. <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code>
+defines the number of parameter settings that are sampled. <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iter</span></code> trades off
+runtime vs quality of the solution. The following variables are defined in <code class="xref py py-func docutils literal notranslate"><span class="pre">MLConf()</span></code> :</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
@@ -216,9 +216,9 @@ the name of the model in reference.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="src.param_tuning.ParamTuning.trainClassifier">
-<code class="sig-name descname">trainClassifier</code><span class="sig-paren">(</span><em class="sig-param">X_train</em>, <em class="sig-param">y_train</em>, <em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.trainClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.trainClassifier" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.param_tuning.ParamTuning.trainClassifier">
+<code class="sig-name descname">trainClassifier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/param_tuning.html#ParamTuning.trainClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.param_tuning.ParamTuning.trainClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a classifier from the training set (X_train, y_train).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -237,9 +237,9 @@ the name of the model in reference.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="src.param_tuning.ParamTuning.testClassifier">
-<code class="sig-name descname">testClassifier</code><span class="sig-paren">(</span><em class="sig-param">X_test</em>, <em class="sig-param">y_test</em>, <em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/param_tuning.html#ParamTuning.testClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.param_tuning.ParamTuning.testClassifier" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.param_tuning.ParamTuning.testClassifier">
+<code class="sig-name descname">testClassifier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_test</span></em>, <em class="sig-param"><span class="n">y_test</span></em>, <em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">proba</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/param_tuning.html#ParamTuning.testClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.param_tuning.ParamTuning.testClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate a classifier on a testing set (X_test, y_test).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

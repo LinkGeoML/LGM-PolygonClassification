@@ -11,7 +11,7 @@ Welcome to LGM-PolygonClassification's documentation!
 How to use
 ^^^^^^^^^^
    
-.. automodule:: run
+.. automodule:: polygon_classification.cli.run
    :members:
 
 API Reference

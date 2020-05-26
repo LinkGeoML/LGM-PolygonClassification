@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -152,21 +152,35 @@
   <div class="section" id="core">
 <h1>core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h1>
 <blockquote>
-<div><dl class="class">
-<dt id="src.core.StrategyEvaluator">
-<em class="property">class </em><code class="sig-prename descclassname">src.core.</code><code class="sig-name descname">StrategyEvaluator</code><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator" title="Permalink to this definition">¶</a></dt>
+<div><dl class="py class">
+<dt id="polygon_classification.core.StrategyEvaluator">
+<em class="property">class </em><code class="sig-prename descclassname">polygon_classification.core.</code><code class="sig-name descname">StrategyEvaluator</code><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the pipeline for various strategies.</p>
-<dl class="method">
-<dt id="src.core.StrategyEvaluator.hyperparamTuning">
-<code class="sig-name descname">hyperparamTuning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.hyperparamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.hyperparamTuning" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.core.StrategyEvaluator.hyperparamTuning">
+<code class="sig-name descname">hyperparamTuning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">classifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.hyperparamTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.hyperparamTuning" title="Permalink to this definition">¶</a></dt>
 <dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
 polygon classification problem.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="src.core.StrategyEvaluator.exec_classifiers">
-<code class="sig-name descname">exec_classifiers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core.html#StrategyEvaluator.exec_classifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.core.StrategyEvaluator.exec_classifiers" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="polygon_classification.core.StrategyEvaluator.exec_classifiers">
+<code class="sig-name descname">exec_classifiers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.exec_classifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.exec_classifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train and evaluate selected ML algorithms with custom hyper-parameters on dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="polygon_classification.core.StrategyEvaluator.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">classifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+polygon classification problem.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="polygon_classification.core.StrategyEvaluator.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">classifier</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
+polygon classification problem.</p>
 </dd></dl>
 
 </dd></dl>

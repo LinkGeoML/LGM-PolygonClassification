@@ -1,7 +1,7 @@
 core
 =====
 
-    .. autoclass:: src.core.StrategyEvaluator
+    .. autoclass:: polygon_classification.core.StrategyEvaluator
        :members:
 
 :ref:`Return Home <mastertoc>`

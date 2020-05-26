@@ -1,7 +1,7 @@
 features
 ========
 
-    .. autoclass:: src.features.Features
+    .. autoclass:: polygon_classification.features.Features
        :members:
 
 :ref:`Return Home <mastertoc>`

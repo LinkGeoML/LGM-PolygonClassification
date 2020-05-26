@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -153,9 +153,9 @@
   <div class="section" id="config">
 <h1>config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h1>
 <blockquote>
-<div><span class="target" id="module-src.config"></span><dl class="data">
-<dt id="src.config.dataset">
-<code class="sig-prename descclassname">src.config.</code><code class="sig-name descname">dataset</code><em class="property"> = 'data/polygonPairs_dataset.shp'</em><a class="headerlink" href="#src.config.dataset" title="Permalink to this definition">¶</a></dt>
+<div><span class="target" id="module-polygon_classification.config"></span><dl class="py data">
+<dt id="polygon_classification.config.dataset">
+<code class="sig-prename descclassname">polygon_classification.config.</code><code class="sig-name descname">dataset</code><em class="property"> = 'data/polypairs_dataset.csv'</em><a class="headerlink" href="#polygon_classification.config.dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Relative path to the datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -164,9 +164,9 @@
 </dl>
 </dd></dl>
 
-<dl class="data">
-<dt id="src.config.seed_no">
-<code class="sig-prename descclassname">src.config.</code><code class="sig-name descname">seed_no</code><em class="property"> = 42</em><a class="headerlink" href="#src.config.seed_no" title="Permalink to this definition">¶</a></dt>
+<dl class="py data">
+<dt id="polygon_classification.config.seed_no">
+<code class="sig-prename descclassname">polygon_classification.config.</code><code class="sig-name descname">seed_no</code><em class="property"> = 2020</em><a class="headerlink" href="#polygon_classification.config.seed_no" title="Permalink to this definition">¶</a></dt>
 <dd><p>Seed used by each of the random number generators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -175,9 +175,9 @@
 </dl>
 </dd></dl>
 
-<dl class="data">
-<dt id="src.config.test_split_thres">
-<code class="sig-prename descclassname">src.config.</code><code class="sig-name descname">test_split_thres</code><em class="property"> = 0.2</em><a class="headerlink" href="#src.config.test_split_thres" title="Permalink to this definition">¶</a></dt>
+<dl class="py data">
+<dt id="polygon_classification.config.test_split_thres">
+<code class="sig-prename descclassname">polygon_classification.config.</code><code class="sig-name descname">test_split_thres</code><em class="property"> = 0.2</em><a class="headerlink" href="#polygon_classification.config.test_split_thres" title="Permalink to this definition">¶</a></dt>
 <dd><p>Proportion of the dataset to include in the test split. Accepted values should be between 0.0 and 1.0.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -186,9 +186,9 @@
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt id="src.config.MLConf">
-<em class="property">class </em><code class="sig-prename descclassname">src.config.</code><code class="sig-name descname">MLConf</code><a class="reference internal" href="_modules/src/config.html#MLConf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.config.MLConf" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt id="polygon_classification.config.MLConf">
+<em class="property">class </em><code class="sig-prename descclassname">polygon_classification.config.</code><code class="sig-name descname">MLConf</code><a class="reference internal" href="_modules/polygon_classification/config.html#MLConf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.config.MLConf" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class initializes parameters that correspond to the machine learning part of the framework.</p>
 <p>These variables define the parameter grid for GridSearchCV:</p>
 <dl class="field-list simple">
@@ -215,9 +215,9 @@ continuous parameters (whenever this is feasible):</p>
 </ul>
 </dd>
 </dl>
-<dl class="attribute">
-<dt id="src.config.MLConf.kfold_parameter">
-<code class="sig-name descname">kfold_parameter</code><em class="property"> = 5</em><a class="headerlink" href="#src.config.MLConf.kfold_parameter" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.kfold_parameter">
+<code class="sig-name descname">kfold_parameter</code><em class="property"> = 5</em><a class="headerlink" href="#polygon_classification.config.MLConf.kfold_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of outer folds that splits the dataset for the k-fold cross-validation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -226,9 +226,9 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.n_jobs">
-<code class="sig-name descname">n_jobs</code><em class="property"> = -1</em><a class="headerlink" href="#src.config.MLConf.n_jobs" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.n_jobs">
+<code class="sig-name descname">n_jobs</code><em class="property"> = -1</em><a class="headerlink" href="#polygon_classification.config.MLConf.n_jobs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of parallel jobs to be initiated. -1 means to utilize all available processors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -237,9 +237,9 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.extra_features">
-<code class="sig-name descname">extra_features</code><em class="property"> = False</em><a class="headerlink" href="#src.config.MLConf.extra_features" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.extra_features">
+<code class="sig-name descname">extra_features</code><em class="property"> = True</em><a class="headerlink" href="#polygon_classification.config.MLConf.extra_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to build additional features or not, i.e., convex hull of polygons and dist of centroids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -248,13 +248,13 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.hyperparams_search_method">
-<code class="sig-name descname">hyperparams_search_method</code><em class="property"> = 'randomized'</em><a class="headerlink" href="#src.config.MLConf.hyperparams_search_method" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.hyperparams_search_method">
+<code class="sig-name descname">hyperparams_search_method</code><em class="property"> = 'grid'</em><a class="headerlink" href="#polygon_classification.config.MLConf.hyperparams_search_method" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search Method to use for finding best hyperparameters. (<em>randomized</em> | <em>grid</em>).</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="tuning.html#src.param_tuning.ParamTuning.fineTuneClassifiers" title="src.param_tuning.ParamTuning.fineTuneClassifiers"><code class="xref py py-func docutils literal notranslate"><span class="pre">fineTuneClassifiers()</span></code></a>. Details on available inputs.</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">fineTuneClassifiers()</span></code></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -263,10 +263,11 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.max_iter">
-<code class="sig-name descname">max_iter</code><em class="property"> = 500</em><a class="headerlink" href="#src.config.MLConf.max_iter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of iterations that RandomizedSearchCV should execute. It applies only when <a class="reference internal" href="#src.config.MLConf.hyperparams_search_method" title="src.config.MLConf.hyperparams_search_method"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperparams_search_method</span></code></a> equals to ‘randomized’.</p>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.max_iter">
+<code class="sig-name descname">max_iter</code><em class="property"> = 300</em><a class="headerlink" href="#polygon_classification.config.MLConf.max_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of iterations that RandomizedSearchCV should execute. It applies only when <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperparams_</span>
+<span class="pre">search_method</span></code> equals to ‘randomized’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
@@ -274,9 +275,9 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.score">
-<code class="sig-name descname">score</code><em class="property"> = 'accuracy'</em><a class="headerlink" href="#src.config.MLConf.score" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.score">
+<code class="sig-name descname">score</code><em class="property"> = 'accuracy'</em><a class="headerlink" href="#polygon_classification.config.MLConf.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>The metric to optimize on hyper-parameter tuning. Possible valid values presented on <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values">Scikit predefined values</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -285,9 +286,9 @@ continuous parameters (whenever this is feasible):</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="src.config.MLConf.classifiers">
-<code class="sig-name descname">classifiers</code><em class="property"> = ['RandomForest']</em><a class="headerlink" href="#src.config.MLConf.classifiers" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="polygon_classification.config.MLConf.classifiers">
+<code class="sig-name descname">classifiers</code><em class="property"> = ['RandomForest']</em><a class="headerlink" href="#polygon_classification.config.MLConf.classifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define the classifiers to apply on code execution. Accepted values are:</p>
 <ul class="simple">
 <li><p>SVM</p></li>
