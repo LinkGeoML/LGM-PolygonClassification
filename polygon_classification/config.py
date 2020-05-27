@@ -63,8 +63,8 @@ class MLConf:
     :func:`~polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
     """
 
-    #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when :class:`hyperparams_
-    #: search_method` equals to 'randomized'.
+    #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when
+    #: :attr:`hyperparams_search_method` equals to 'randomized'.
     max_iter = 300
 
     score = 'accuracy'

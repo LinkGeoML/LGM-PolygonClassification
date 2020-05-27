@@ -6,4 +6,3 @@ config
 
 :ref:`Return Home <mastertoc>`
 
-
