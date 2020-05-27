@@ -112,7 +112,7 @@ __ https://linkgeoml.github.io/LGM-PolygonClassification/
 
 License
 -------
-LGM-Interlinking is available under the `MIT <https://opensource.org/licenses/MIT>`_ License.
+LGM-PolygonClassification is available under the `MIT <https://opensource.org/licenses/MIT>`_ License.
 
 ..
     .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
