@@ -53,7 +53,7 @@ fields/columns:
 
 * The geometry of the initial, land allocated polygon.
 * The geometry of final polygon.
-* The ORI\_TYPE label, i.e., {1, 4}, that denotes the dominant provenance of final polygon, i.e., land parcel.
+* The ORI\_TYPE label, e.g., {1, 4}, that denotes the dominant provenance of final polygon, i.e., land parcel.
 
 The library implements the following distinct processes:
 

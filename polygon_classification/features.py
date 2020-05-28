@@ -14,7 +14,7 @@ class Features:
 
     See Also
     --------
-    :func:`compute`: Details on the implemented features.
+    :func:`compute_features`: Details on the implemented features.
     """
 
     def __init__(self):
@@ -33,7 +33,7 @@ class Features:
         fX: ndarray
             The computed features to use as input to ML classifiers.
         """
-        fX = np.asarray(list(map(self.compute, X['pst_geom'], X['dian_geom'])), dtype=float)
+        fX = np.asarray(list(map(self.compute_features, X['pst_geom'], X['dian_geom'])), dtype=float)
         # print('Before normalization: ', np.amin(fX, axis=0), np.amax(fX, axis=0))
         fX = MinMaxScaler().fit_transform(fX)
         # fX = StandardScaler().fit_transform(fX)
@@ -45,7 +45,7 @@ class Features:
 
         return fX
 
-    def compute(self, poly1, poly2):
+    def compute_features(self, poly1, poly2):
         """
         This method builds an ndarray of the following features:
 
