@@ -164,7 +164,8 @@ distinct polygon variant. LGM-PolygonClassification implements a series of train
 consideration the individual characteristics of each polygon as well as including information about the geospatial
 relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality,
 based on the <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> toolkit, assessing as series of classification models and
-parameterizations, in order to find the most fitting model for the data at hand.</p>
+parameterizations, in order to find the most fitting model for the data at hand. Indicatively, we
+succeed a 98.44% accuracy with the Gradient Boosting Trees classifier (see <a class="reference internal" href="#references">References</a>).</p>
 <p>The source code was tested using Python 3 (&gt;=3.6) and Scikit-Learn 0.22.1 on a Linux server.</p>
 <div class="section" id="dependencies">
 <h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
@@ -191,8 +192,8 @@ change to the main directory and run:</p>
 </div>
 <p>It should install all required <a class="reference internal" href="#dependencies">dependencies</a> automatically.</p>
 </div>
-<div class="section" id="how-to-use">
-<h4>How to use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="usage">
+<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
 <p>The input dataset need to be in CSV format. Specifically, a valid dataset should have at least the following
 fields/columns:</p>
 <ul class="simple">
@@ -256,12 +257,21 @@ Commands:
 <h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
 <p>Source code documentation is available from <a class="reference external" href="https://linkgeoml.github.io/LGM-PolygonClassification/">linkgeoml.github.io</a>.</p>
 </div>
+<div class="section" id="references">
+<h4>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><ol class="upperalpha simple" start="22">
+<li><p>Kaffes et al. Determining the provenance of land parcel polygons via machine learning. SSDBM ’20.</p></li>
+</ol>
+</li>
+</ul>
+</div>
 <div class="section" id="license">
 <h4>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h4>
 <p>LGM-PolygonClassification is available under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT</a> License.</p>
-<div class="section" id="id2">
-<h5>How to use<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
-<span class="target" id="module-polygon_classification.cli.run"></span></div>
+<div class="section" id="module-polygon_classification.cli.run">
+<span id="how-to-use"></span><h5>How to use<a class="headerlink" href="#module-polygon_classification.cli.run" title="Permalink to this headline">¶</a></h5>
+</div>
 <div class="section" id="api-reference">
 <h5>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h5>
 <p>View the auto-generated API documentation for information on a specific function, class, or method.</p>

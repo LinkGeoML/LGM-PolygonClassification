@@ -16,7 +16,8 @@ distinct polygon variant. LGM-PolygonClassification implements a series of train
 consideration the individual characteristics of each polygon as well as including information about the geospatial
 relationship between each matched pair. Further, it encapsulates grid-search and cross-validation functionality,
 based on the `scikit-learn <https://scikit-learn.org/>`_ toolkit, assessing as series of classification models and
-parameterizations, in order to find the most fitting model for the data at hand.
+parameterizations, in order to find the most fitting model for the data at hand. Indicatively, we
+succeed a 98.44% accuracy with the Gradient Boosting Trees classifier (see `References`_).
 
 The source code was tested using Python 3 (>=3.6) and Scikit-Learn 0.22.1 on a Linux server.
 
@@ -45,8 +46,8 @@ change to the main directory and run:
 
 It should install all required `dependencies`_ automatically.
 
-How to use
-----------
+Usage
+------
 The input dataset need to be in CSV format. Specifically, a valid dataset should have at least the following
 fields/columns:
 
@@ -109,6 +110,10 @@ Documentation
 Source code documentation is available from `linkgeoml.github.io`__.
 
 __ https://linkgeoml.github.io/LGM-PolygonClassification/
+
+References
+----------
+* V. Kaffes et al. Determining the provenance of land parcel polygons via machine learning. SSDBM ’20.
 
 License
 -------
