@@ -204,7 +204,7 @@
     <span class="n">extra_features</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="c1"># accepted values: randomized, grid, hyperband - not yet implemented!!!</span>
-    <span class="n">hyperparams_search_method</span> <span class="o">=</span> <span class="s1">&#39;grid&#39;</span>
+    <span class="n">hyperparams_search_method</span> <span class="o">=</span> <span class="s1">&#39;randomized&#39;</span>
     <span class="sd">&quot;&quot;&quot;str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).</span>
 <span class="sd">    </span>
 <span class="sd">    See Also</span>
@@ -214,7 +214,7 @@
 
     <span class="c1">#: int: Number of iterations that RandomizedSearchCV should execute. It applies only when</span>
     <span class="c1">#: :attr:`hyperparams_search_method` equals to &#39;randomized&#39;.</span>
-    <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">3</span>
 
     <span class="n">score</span> <span class="o">=</span> <span class="s1">&#39;accuracy&#39;</span>
     <span class="sd">&quot;&quot;&quot;str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_. </span>

@@ -170,6 +170,8 @@ class ParamTuning:
             The target values, i.e. class labels.
         model: classifier object
             A trained classifier.
+        proba : bool
+            Predict class probabilities for X if it is `True`.
 
         Returns
         -------

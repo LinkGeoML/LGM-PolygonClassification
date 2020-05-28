@@ -85,9 +85,8 @@ following command:
 
 .. code-block:: bash
 
-    $ python -m interlinking.cli train --dataset <path/to/train-dataset>
-    $ python -m interlinking.cli evaluate --dataset <path/to/train-dataset>
-    --test_set <path/to/test-dataset>
+    $ python -m interlinking.cli run --train_dataset <path/to/train-dataset>
+    --test_dataset <path/to/test-dataset>
 
 Additionally, *help* is available on the command line interface (*CLI*). Enter the following to list all supported
 commands or options for a given command with a short description.
@@ -103,6 +102,7 @@ commands or options for a given command with a short description.
 
     Commands:
       evaluate  evaluate the effectiveness of the proposed methods
+      run       A complete process of distinct steps in figuring out the best ML algorithm with optimal hyperparameters...
       train     tune various classifiers and select the best hyper-parameters on a train dataset
 
 Documentation

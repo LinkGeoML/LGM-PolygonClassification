@@ -55,7 +55,7 @@ class MLConf:
     extra_features = True
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
-    hyperparams_search_method = 'grid'
+    hyperparams_search_method = 'randomized'
     """str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).
     
     See Also
@@ -65,7 +65,7 @@ class MLConf:
 
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when
     #: :attr:`hyperparams_search_method` equals to 'randomized'.
-    max_iter = 300
+    max_iter = 3
 
     score = 'accuracy'
     """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_. 

@@ -11,8 +11,8 @@ def cli():
 
 
 @cli.command(help='tune various classifiers and select the best hyper-parameters on a train dataset')
-@click.option('--dataset', default='train_dataset.csv', help='Path to train dataset')
-@click.option('--classifiers', default='RandomForest', help='ML classifiers to tune')
+@click.option('--dataset', default='train_dataset.csv', help='Name of train dataset')
+@click.option('--classifiers', default='RandomForest', show_default=True, help='Comma separated classifiers to tune')
 def train(dataset, classifiers):
     click.echo('Training algorithms')
 
@@ -28,8 +28,8 @@ def train(dataset, classifiers):
 
 
 @cli.command(help='evaluate the effectiveness of the proposed methods')
-@click.option('--dataset', default='test_dataset.csv', help='Path to test dataset')
-@click.option('--classifier', default='RandomForest', help='ML classifier to predict')
+@click.option('--dataset', default='test_dataset.csv', help='Name of test dataset')
+@click.option('--classifier', default='RandomForest', show_default=True, help='ML classifier to predict')
 def evaluate(dataset, classifier):
     click.echo('Running evaluation')
 
@@ -44,13 +44,30 @@ def evaluate(dataset, classifier):
         print("Test dataset file is not found!!!\n")
 
 
-@cli.command()
-@click.option('--dataset', default='polypairs_dataset.csv', help='Folder of datasets')
-def run(dataset):
+@cli.command(help='A complete process of distinct steps in figuring out the best ML algorithm with optimal '
+                  'hyperparameters that best fits to data at hand for the polygon classification problem.')
+# @click.option('--dataset', default='polypairs_dataset.csv', help='Folder of datasets')
+@click.option('--train_dataset', default='train_dataset.csv', help='Name of train dataset')
+@click.option('--test_dataset', default='test_dataset.csv', help='Name of test dataset')
+@click.option('--classifiers', default='RandomForest', show_default=True,
+              help='Comma separated classifiers to tune, train and evaluate')
+def run(train_dataset, test_dataset, classifiers):
     click.echo('Running evaluation')
 
-    if os.path.isfile(os.path.join(os.getcwd(), 'data', dataset)):
-        StrategyEvaluator().exec_classifiers(os.path.join(os.getcwd(), 'data', dataset))
+    options = {
+        'dataset': os.path.join(os.getcwd(), 'data', train_dataset),
+        'classifiers': classifiers.strip().split(',')
+    }
+    options2 = {
+        'dataset': os.path.join(os.getcwd(), 'data', test_dataset),
+        'classifier': classifiers.strip().split(',')[0]
+    }
+
+    if os.path.isfile(os.path.join(os.getcwd(), 'data', train_dataset)) and \
+            os.path.isfile(os.path.join(os.getcwd(), 'data', test_dataset)):
+        # StrategyEvaluator().exec_classifiers(os.path.join(os.getcwd(), 'data', dataset))
+        StrategyEvaluator().train(**options)
+        StrategyEvaluator().evaluate(**options2)
     else:
         print("Input files in config are not found!!!\n")
 

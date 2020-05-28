@@ -172,15 +172,30 @@ polygon classification problem.</p>
 <dl class="py method">
 <dt id="polygon_classification.core.StrategyEvaluator.train">
 <code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">classifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-polygon classification problem.</p>
+<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with optimal hyperparameters that
+best fits to data at hand for the polygon classification problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em>) – Name of train dataset</p></li>
+<li><p><strong>classifiers</strong> (<em>str</em>) – Comma separated classifiers to tune</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="polygon_classification.core.StrategyEvaluator.evaluate">
 <code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">classifier</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygon_classification/core.html#StrategyEvaluator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygon_classification.core.StrategyEvaluator.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-polygon classification problem.</p>
+<dd><p>Evaluate the best ML algorithm with optimal hyperparameters to new unseen data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em>) – Name of train dataset</p></li>
+<li><p><strong>classifier</strong> (<em>str</em>) – Classifier to train and evaluate</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

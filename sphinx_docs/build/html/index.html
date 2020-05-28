@@ -233,9 +233,8 @@ splitting it in folds.</p>
 <p>A complete pipeline of the above processes, i.e., features extraction, training and evaluating state-of-the-art
 classifiers, for polygon classification, i.e., provenance recommendation of a land parcel, can be executed with the
 following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m interlinking.cli train --dataset &lt;path/to/train-dataset&gt;
-$ python -m interlinking.cli evaluate --dataset &lt;path/to/train-dataset&gt;
---test_set &lt;path/to/test-dataset&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m interlinking.cli run --train_dataset &lt;path/to/train-dataset&gt;
+--test_dataset &lt;path/to/test-dataset&gt;
 </pre></div>
 </div>
 <p>Additionally, <em>help</em> is available on the command line interface (<em>CLI</em>). Enter the following to list all supported
@@ -249,6 +248,7 @@ Options:
 
 Commands:
   evaluate  evaluate the effectiveness of the proposed methods
+  run       A <span class="nb">complete</span> process of distinct steps in figuring out the best ML algorithm with optimal hyperparameters...
   train     tune various classifiers and <span class="k">select</span> the best hyper-parameters on a train dataset
 </pre></div>
 </div>

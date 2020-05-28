@@ -101,8 +101,15 @@ class StrategyEvaluator:
             print("The whole process took {} sec.\n".format(time.time() - tot_time))
 
     def train(self, dataset, classifiers):
-        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-        polygon classification problem.
+        """A complete process of distinct steps in figuring out the best ML algorithm with optimal hyperparameters that
+        best fits to data at hand for the polygon classification problem.
+
+        Parameters
+        ----------
+        dataset : str
+            Name of train dataset
+        classifiers : str
+            Comma separated classifiers to tune
         """
         pt = param_tuning.ParamTuning()
         f = Features()
@@ -121,7 +128,7 @@ class StrategyEvaluator:
         best_clf = pt.fineTuneClassifiers(fX, ytrain, classifiers)
         estimator = best_clf['estimator']
         print("Best hyperparams for {}, {}, with score {}; {} sec.".format(
-            best_clf['hyperparams'], best_clf['clf_name'], best_clf['score'], time.time() - start_time))
+            best_clf['clf_name'], best_clf['hyperparams'], best_clf['score'], time.time() - start_time))
 
         estimator = pt.trainClassifier(fX, ytrain, estimator)
         os.makedirs(os.path.join(os.getcwd(), 'models'), exist_ok=True)
@@ -130,8 +137,14 @@ class StrategyEvaluator:
         print("The whole process took {} sec.".format(time.time() - tot_time))
 
     def evaluate(self, dataset, classifier):
-        """A complete process of distinct steps in figuring out the best ML algorithm with best hyperparameters to
-        polygon classification problem.
+        """Evaluate the best ML algorithm with optimal hyperparameters to new unseen data.
+
+        Parameters
+        ----------
+        dataset : str
+            Name of train dataset
+        classifier : str
+            Classifier to train and evaluate
         """
         pt = param_tuning.ParamTuning()
         f = Features()
