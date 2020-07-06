@@ -1,8 +1,9 @@
 """Command line interface for operation management"""
 import click
-import os
+import os, sys
 
 from polygon_classification.core import StrategyEvaluator
+from polygon_classification.config import MLConf
 
 
 @click.group(context_settings=dict(max_content_width=120, help_option_names=['-h', '--help']))
@@ -14,12 +15,15 @@ def cli():
 @click.option('--dataset', default='train_dataset.csv', help='Name of train dataset')
 @click.option('--classifiers', default='RandomForest', show_default=True, help='Comma separated classifiers to tune')
 def train(dataset, classifiers):
-    click.echo('Training algorithms')
+    click.echo('Training algorithms...')
 
     options = {
         'dataset': os.path.join(os.getcwd(), 'data', dataset),
         'classifiers': classifiers.strip().split(',')
     }
+
+    if not set(options['classifiers']).issubset(MLConf.classifiers):
+        sys.exit(f'The accepted classifier names are: {",".join(MLConf.classifiers)}')
 
     if os.path.isfile(options['dataset']):
         StrategyEvaluator().train(**options)
@@ -31,12 +35,15 @@ def train(dataset, classifiers):
 @click.option('--dataset', default='test_dataset.csv', help='Name of test dataset')
 @click.option('--classifier', default='RandomForest', show_default=True, help='ML classifier to predict')
 def evaluate(dataset, classifier):
-    click.echo('Running evaluation')
+    click.echo('Running evaluation...')
 
     options = {
         'dataset': os.path.join(os.getcwd(), 'data', dataset),
         'classifier': classifier
     }
+
+    if not set(options['classifier']).issubset(MLConf.classifiers):
+        sys.exit(f'The accepted classifier names are: {",".join(MLConf.classifiers)}')
 
     if os.path.isfile(options['dataset']):
         StrategyEvaluator().evaluate(**options)
@@ -52,22 +59,26 @@ def evaluate(dataset, classifier):
 @click.option('--classifiers', default='RandomForest', show_default=True,
               help='Comma separated classifiers to tune, train and evaluate')
 def run(train_dataset, test_dataset, classifiers):
-    click.echo('Running evaluation')
+    click.echo('Running evaluation...')
 
-    options = {
+    train_options = {
         'dataset': os.path.join(os.getcwd(), 'data', train_dataset),
         'classifiers': classifiers.strip().split(',')
     }
-    options2 = {
+    test_options = {
         'dataset': os.path.join(os.getcwd(), 'data', test_dataset),
-        'classifier': classifiers.strip().split(',')[0]
+        'classifier': None
     }
 
-    if os.path.isfile(os.path.join(os.getcwd(), 'data', train_dataset)) and \
-            os.path.isfile(os.path.join(os.getcwd(), 'data', test_dataset)):
+    if not set(train_options['classifiers']).issubset(MLConf.classifiers):
+        sys.exit(f'The accepted classifier names are: {",".join(MLConf.classifiers)}')
+
+    if os.path.isfile(train_options['dataset']) and os.path.isfile(test_options['dataset']):
         # StrategyEvaluator().exec_classifiers(os.path.join(os.getcwd(), 'data', dataset))
-        StrategyEvaluator().train(**options)
-        StrategyEvaluator().evaluate(**options2)
+        best_clf_name = StrategyEvaluator().train(**train_options)
+
+        test_options['classifier'] = best_clf_name
+        StrategyEvaluator().evaluate(**test_options)
     else:
         print("Input files in config are not found!!!\n")
 

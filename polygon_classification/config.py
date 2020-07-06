@@ -57,39 +57,39 @@ class MLConf:
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
     hyperparams_search_method = 'randomized'
     """str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).
-    
+
     See Also
     --------
-    :func:`~polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.       
+    :func:`~polygon_classification.param_tuning.ParamTuning.fineTuneClassifiers`. Details on available inputs.
     """
 
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when
     #: :attr:`hyperparams_search_method` equals to 'randomized'.
-    max_iter = 3
+    max_iter = 300
 
     score = 'accuracy'
-    """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_. 
-    
+    """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_.
+
     .. _Scikit predefined values:
         https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
     """
 
     classifiers = [
-        # 'SVM',
-        # 'DecisionTree',
+        'SVM',
+        'DecisionTree',
         'RandomForest',
-        # 'ExtraTrees',
-        # 'XGBoost',
-        # 'MLP'
+        'ExtraTrees',
+        'XGBoost',
+        'MLP'
     ]
-    """list of str: Define the classifiers to apply on code execution. Accepted values are: 
-        
-    - SVM 
+    """list of str: Define the classifiers to apply on code execution. Accepted values are:
+
+    - SVM
     - DecisionTree
     - RandomForest
     - ExtraTrees
     - XGBoost
-    - MLP.
+    - MLP
     """
 
     clf_custom_params = {

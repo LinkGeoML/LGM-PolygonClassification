@@ -87,6 +87,9 @@ class ParamTuning:
             The training input samples.
         y: array-like, shape = [n_samples] or [n_samples, n_outputs]
             The target values, i.e. class labels.
+        classifiers: array-like
+            A number of supported classifiers, i.e., Random Forest, SVM, Extra Trees etc., to search for optimal
+            hyper-parameters.
 
         Returns
         -------

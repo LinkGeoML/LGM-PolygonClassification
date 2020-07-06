@@ -130,11 +130,13 @@ class StrategyEvaluator:
         print("Best hyperparams for {}, {}, with score {}; {} sec.".format(
             best_clf['clf_name'], best_clf['hyperparams'], best_clf['score'], time.time() - start_time))
 
-        estimator = pt.trainClassifier(fX, ytrain, estimator)
+        # estimator = pt.trainClassifier(fX, ytrain, estimator)
         os.makedirs(os.path.join(os.getcwd(), 'models'), exist_ok=True)
         dump(estimator, os.path.join(os.getcwd(), 'models', best_clf['clf_name'] + '_model.joblib'))
 
         print("The whole process took {} sec.".format(time.time() - tot_time))
+
+        return best_clf['clf_name']
 
     def evaluate(self, dataset, classifier):
         """Evaluate the best ML algorithm with optimal hyperparameters to new unseen data.
