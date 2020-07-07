@@ -31,7 +31,7 @@ def train(dataset, classifiers):
         print("Train dataset file is not found!!!\n")
 
 
-@cli.command(help='evaluate the effectiveness of the proposed methods')
+@cli.command('eval', help='evaluate the effectiveness of the proposed methods')
 @click.option('--dataset', default='test_dataset.csv', help='Name of test dataset')
 def evaluate(dataset):
     click.echo('Running evaluation...')
