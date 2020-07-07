@@ -49,13 +49,13 @@ class MLConf:
 
     kfold_parameter = 5  #: int: The number of outer folds that splits the dataset for the k-fold cross-validation.
 
-    n_jobs = -1  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
+    n_jobs = 2  #: int: Number of parallel jobs to be initiated. -1 means to utilize all available processors.
 
     #: bool: Whether to build additional features or not, i.e., convex hull of polygons and dist of centroids.
     extra_features = True
 
     # accepted values: randomized, grid, hyperband - not yet implemented!!!
-    hyperparams_search_method = 'randomized'
+    hyperparams_search_method = 'grid'
     """str: Search Method to use for finding best hyperparameters. (*randomized* | *grid*).
 
     See Also
@@ -188,12 +188,12 @@ class MLConf:
     }
     RandomForest_hyperparameters = {
         # 'bootstrap': [True, False],
-        'max_depth': [5, 10, 20, 50, 70, 100],
+        'max_depth': [5, 20, 50, 80, 100, 120],
         'criterion': ['gini', 'entropy'],
         # 'max_features': ['log2', 'sqrt'],  # auto is equal to sqrt
         # 'min_samples_leaf': [1, 2, 4],
         'min_samples_split': [2, 3, 5],
-        "n_estimators": [100, 120, 200, 250],
+        "n_estimators": [100, 200, 500, 1000],
         'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
     }
     XGBoost_hyperparameters = {
@@ -252,10 +252,10 @@ class MLConf:
         'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
     }
     XGBoost_hyperparameters_dist = {
-        "n_estimators": sp_randint(20, 200),
+        "n_estimators": sp_randint(20, 500),
         # 'eta': expon(loc=0.01, scale=0.1),  # 'learning_rate'
         # hyperparameters to avoid overfitting
-        'max_depth': sp_randint(10, 200),
+        'max_depth': sp_randint(10, 100),
         'gamma': sp_randint(0, 5),
         'subsample': truncnorm(0.4, 0.7),
         # 'colsample_bytree': truncnorm(0.8, 1),

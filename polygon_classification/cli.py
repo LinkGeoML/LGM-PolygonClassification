@@ -33,20 +33,12 @@ def train(dataset, classifiers):
 
 @cli.command(help='evaluate the effectiveness of the proposed methods')
 @click.option('--dataset', default='test_dataset.csv', help='Name of test dataset')
-@click.option('--classifier', default='RandomForest', show_default=True, help='ML classifier to predict')
-def evaluate(dataset, classifier):
+def evaluate(dataset):
     click.echo('Running evaluation...')
 
-    options = {
-        'dataset': os.path.join(os.getcwd(), 'data', dataset),
-        'classifier': classifier
-    }
-
-    if not set(options['classifier']).issubset(MLConf.classifiers):
-        sys.exit(f'The accepted classifier names are: {",".join(MLConf.classifiers)}')
-
-    if os.path.isfile(options['dataset']):
-        StrategyEvaluator().evaluate(**options)
+    eval_data = os.path.join(os.getcwd(), 'data', dataset)
+    if os.path.isfile(eval_data):
+        StrategyEvaluator().exec_classifiers(eval_data)
     else:
         print("Test dataset file is not found!!!\n")
 
