@@ -85,7 +85,7 @@ following command:
 .. code-block:: bash
 
     $ python -m polygon_classification.cli run --train_dataset <path/to/train-dataset>
-    --test_dataset <path/to/test-dataset>
+    --test_dataset <path/to/test-dataset> --classifiers SVM,DecisionTree,RandomForest,ExtraTrees,MLP,XGBoost
 
 Additionally, *help* is available on the command line interface (*CLI*). Enter the following to list all supported
 commands or options for a given command with a short description.

@@ -188,7 +188,7 @@ class MLConf:
     }
     RandomForest_hyperparameters = {
         # 'bootstrap': [True, False],
-        'max_depth': [5, 20, 50, 80, 100, 120],
+        'max_depth': [5, 20, 50, 80, 100],
         'criterion': ['gini', 'entropy'],
         # 'max_features': ['log2', 'sqrt'],  # auto is equal to sqrt
         # 'min_samples_leaf': [1, 2, 4],
