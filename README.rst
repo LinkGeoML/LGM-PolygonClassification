@@ -19,21 +19,20 @@ based on the `scikit-learn <https://scikit-learn.org/>`_ toolkit, assessing as s
 parameterizations, in order to find the most fitting model for the data at hand. Indicatively, we
 succeed a 98.44% accuracy with the Gradient Boosting Trees classifier (see `References`_).
 
-The source code was tested using Python 3 (>=3.6) and Scikit-Learn 0.22.1 on a Linux server.
+The source code was tested using Python 3 (>=3.7) and Scikit-Learn 0.23.1 on a Linux server.
 
 Dependencies
 ------------
-* python>=3.6
-* click==7.1.1
-* fiona==1.8.13.post1
-* geopandas==0.7.0
-* numpy==1.18.1
-* pandas==1.0.2
-* scikit-learn==0.22.1
-* scipy==1.4.1
-* shapely==1.7.0
-* tabulate==0.8.6
-* xgboost==1.0.2
+* click==7.1.2
+* fiona==1.8.18
+* geopandas==0.9.0
+* numpy==1.20.2
+* pandas==1.2.3
+* scikit-learn==0.23.1
+* scipy==1.6.2
+* shapely==1.7.1
+* tabulate==0.8.9
+* xgboost==1.3.3
 
 Setup procedure
 ---------------
@@ -85,7 +84,7 @@ following command:
 
 .. code-block:: bash
 
-    $ python -m interlinking.cli run --train_dataset <path/to/train-dataset>
+    $ python -m polygon_classification.cli run --train_dataset <path/to/train-dataset>
     --test_dataset <path/to/test-dataset>
 
 Additionally, *help* is available on the command line interface (*CLI*). Enter the following to list all supported
