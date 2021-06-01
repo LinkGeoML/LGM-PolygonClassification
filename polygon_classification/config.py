@@ -65,7 +65,7 @@ class MLConf:
 
     #: int: Number of iterations that RandomizedSearchCV should execute. It applies only when
     #: :attr:`hyperparams_search_method` equals to 'randomized'.
-    max_iter = 300
+    max_iter = 200
 
     score = 'accuracy'
     """str: The metric to optimize on hyper-parameter tuning. Possible valid values presented on `Scikit predefined values`_.
@@ -139,7 +139,7 @@ class MLConf:
             # 'colsample_bytree': 0.598605740971479, 'gamma': 1, 'eta': 0.17994840726392214,
             # 'subsample': 0.7250606565532803,
             # extra
-            'max_depth': 72, 'n_estimators': 21, 'scale_pos_weight': 3,
+            'max_depth': 72, 'n_estimators': 21, 'scale_pos_weight': 3, 'eval_metric': 'logloss',
             # 'random_state': seed_no, 'nthread': n_jobs, 'objective': "binary:logistic",
         },
         'MLP': {
@@ -157,21 +157,21 @@ class MLConf:
     SVM_hyperparameters = [
         {
             'kernel': ['rbf', 'sigmoid'],
-            'gamma': [1e-2, 0.1, 1, 5, 10, 30, 'scale'],
-            'C': [0.01, 0.1, 1, 10, 100, 200, 300],
+            'gamma': [1e-2, 0.1, 1, 5, 10, 'scale'],
+            'C': [0.01, 0.1, 1, 10, 100],
             'tol': [1e-3, 1e-2],
             # 'probability': [True, False],
-            'max_iter': [5000],
+            'max_iter': [50000],
             'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
         },
         {
             'kernel': ['poly'],
-            'gamma': ['auto', 'scale', 1, 10, 30],
-            'C': [0.01, 0.1, 1, 10, 100, 200, 300],
-            'degree': [1, 2, 3],  # degree=1 is the same as using a 'linear' kernel
+            'gamma': ['auto', 'scale', 1, 10],
+            'C': [0.01, 0.1, 1, 10],
+            'degree': [1, 2],  # degree=1 is the same as using a 'linear' kernel
             'tol': [1e-3, 1e-2],
             # 'probability': [True, False],
-            'max_iter': [5000],
+            'max_iter': [50000],
             'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
         },
         # {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000], 'max_iter': [3000]}
@@ -214,10 +214,12 @@ class MLConf:
         # could help
         'scale_pos_weight': [1, 2, 3],
         # 'min_child_weight': [1, 5, 10],
+        # "use_label_encoder": [False],
+        "eval_metric": ["logloss"]
     }
     MLP_hyperparameters = {
         'hidden_layer_sizes': [(100,), (50, 50,)],
-        'learning_rate_init': [0.0001, 0.005, 0.01, 0.05, 0.1],
+        'learning_rate_init': [0.0001, 0.01, 0.05, 0.1],
         'max_iter': [3000],
         'solver': ['lbfgs', 'sgd', 'adam'],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
@@ -232,7 +234,7 @@ class MLConf:
         'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
         'degree': [1, 2, 3],
         'tol': [1e-3, 1e-2],
-        'max_iter': [10000]
+        'max_iter': [50000]
     }
     DecisionTree_hyperparameters_dist = {
         'max_depth': sp_randint(10, 200),
@@ -263,6 +265,7 @@ class MLConf:
         'scale_pos_weight': sp_randint(1, 5),
         "reg_alpha": truncnorm(0, 2),
         'reg_lambda': sp_randint(1, 20),
+        "eval_metric": ["logloss", "error"]
     }
     MLP_hyperparameters_dist = {
         'hidden_layer_sizes': [(100,), (50, 50,)],
