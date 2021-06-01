@@ -96,7 +96,7 @@ class MLConf:
         'SVM': {
             # with scaler
             # basic/extra
-            'C': 200, 'class_weight': 'balanced', 'gamma': 10, 'max_iter': 10000,
+            'C': 200, 'class_weight': 'balanced', 'gamma': 10, 'max_iter': 10000, "probability": True
             # 'kernel': 'rbf', 'tol': 0.001
         },
         'DecisionTree': {
@@ -160,19 +160,19 @@ class MLConf:
             'gamma': [1e-2, 0.1, 1, 5, 10, 'scale'],
             'C': [0.01, 0.1, 1, 10, 100],
             'tol': [1e-3, 1e-2],
-            # 'probability': [True, False],
             'max_iter': [50000],
             'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
+            "probability": [True],
         },
         {
             'kernel': ['poly'],
-            'gamma': ['auto', 'scale', 1, 10],
+            # 'gamma': ['auto', 1, 10],
             'C': [0.01, 0.1, 1, 10],
-            'degree': [1, 2],  # degree=1 is the same as using a 'linear' kernel
+            'degree': [1, 2, 3],  # degree=1 is the same as using a 'linear' kernel
             'tol': [1e-3, 1e-2],
-            # 'probability': [True, False],
-            'max_iter': [50000],
+            'max_iter': [80000],
             'class_weight': [None, 'balanced', {1: 2, 4: 1}, {1: 3, 4: 1}],
+            "probability": [True],
         },
         # {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000], 'max_iter': [3000]}
     ]
@@ -234,7 +234,8 @@ class MLConf:
         'class_weight': ['balanced', None] + [{1: w, 4: 1} for w in range(1, 5)],
         'degree': [1, 2, 3],
         'tol': [1e-3, 1e-2],
-        'max_iter': [50000]
+        'max_iter': [80000],
+        "probability": [True],
     }
     DecisionTree_hyperparameters_dist = {
         'max_depth': sp_randint(10, 200),
